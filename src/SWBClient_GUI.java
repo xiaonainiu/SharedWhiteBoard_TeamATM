@@ -19,6 +19,9 @@ public class SWBClient_GUI {
     private JButton bt_color;
     private JButton bt_shape;
     private JPanel board;
+    private JButton bt_enter;
+    private JTextPane text_chat;
+    private JTextPane text_input;
     private int startx;
     private int starty;
     private int x;
@@ -27,6 +30,10 @@ public class SWBClient_GUI {
 //        private JColorChooser chooser;
 
     public SWBClient_GUI() {
+
+        Graphics g;
+        g = board.getGraphics();
+
         bt_color.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -54,6 +61,27 @@ public class SWBClient_GUI {
 //
 //            }
 //        });
+        board.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                startx = e.getX();
+                starty = e.getY();
+            }
+        });
+        board.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                g.setColor(Color.black);
+                x = e.getX();
+                y = e.getY();
+                g.drawLine(startx,starty,x,y);
+                System.out.println(x+","+y);
+                startx = e.getX();
+                starty = e.getY();
+            }
+        });
     }
 
     public static void main(String[] args) {
