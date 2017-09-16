@@ -19,9 +19,10 @@ public class SWBClient_GUI {
     private JButton bt_color;
     private JButton bt_shape;
     private JPanel board;
-    private JButton bt_enter;
-    private JTextPane text_chat;
-    private JTextPane text_input;
+    private JTextField text_info;
+    private JTextPane textPane1;
+    private JButton button1;
+    private JTextArea textArea1;
     private int startx;
     private int starty;
     private int x;
@@ -93,4 +94,7 @@ public class SWBClient_GUI {
         frame.setVisible(true);
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }
