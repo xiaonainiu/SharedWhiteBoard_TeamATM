@@ -58,9 +58,6 @@
           <preferred-size width="150" height="50" />
         </default-constraints>
       </item>
-      <item class="com.sun.deploy.panel.JSmartTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="true" auto-create-binding="false" can-attach-label="false">
-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
-      </item>
       <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
         <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
           <preferred-size width="150" height="50" />
@@ -122,13 +119,6 @@
       <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
         <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
       </item>
-      <item class="javax.swing.JColorChooser" icon="" removable="true" auto-create-binding="false" can-attach-label="false">
-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
-      </item>
-      <item class="SWBClient_GUI" icon="" removable="true" auto-create-binding="false" can-attach-label="false">
-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
-      </item>
     </group>
-    <group name="awt" />
   </component>
 </project>

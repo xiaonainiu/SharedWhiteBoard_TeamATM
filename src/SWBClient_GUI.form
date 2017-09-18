@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainWindow" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="0" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="800" height="598"/>
+      <xy x="20" y="20" width="821" height="598"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -414,12 +414,17 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="f2d85" class="javax.swing.JTextArea" binding="textArea2" default-binding="true">
+              <scrollpane id="aab6b">
                 <constraints/>
-                <properties>
-                  <lineWrap value="true"/>
-                </properties>
-              </component>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="6f429" class="javax.swing.JTextPane" binding="textPane1" default-binding="true">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </scrollpane>
           <scrollpane id="9ec73">
@@ -437,14 +442,16 @@
               </component>
             </children>
           </scrollpane>
-          <component id="751ff" class="javax.swing.JButton" binding="button1" default-binding="true">
+          <component id="751ff" class="javax.swing.JButton" binding="sendButton" default-binding="true">
             <constraints>
               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="100"/>
               </grid>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <background color="-12620950"/>
+              <text value="Send"/>
+              <verticalAlignment value="0"/>
             </properties>
           </component>
         </children>

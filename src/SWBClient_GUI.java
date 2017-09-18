@@ -1,8 +1,14 @@
+import com.sun.javafx.iio.ImageStorage;
+
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.text.Document;
+import java.io.File;
 
 /**
  * Created by ES on 2017/9/14.
@@ -20,9 +26,8 @@ public class SWBClient_GUI {
     private JButton bt_shape;
     private JPanel board;
     private JTextField text_info;
-    private JButton button1;
-    private JTextArea textArea1;
-    private JTextArea textArea2;
+    private JButton sendButton; // chatwindow
+    private JTextArea textArea1; // chatwindow
     private JPanel cl000;
     private JPanel cl111;
     private JPanel cl666;
@@ -41,6 +46,7 @@ public class SWBClient_GUI {
     private JPanel cl105;
     private JButton bt_eraser;
     private JComboBox cb_eraser;
+    private JTextPane textPane1; //chatwindow
     private int startx;
     private int starty;
     private int x;
@@ -165,7 +171,112 @@ public class SWBClient_GUI {
             }
         });
 
+        /**
+         * This part is written by LZH
+         * Chat Window
+         * */
+        //Button Setting
+        sendButton.setText("SEND");
+        Font fb = new Font("TimesRoman",Font.ITALIC,50);
+        sendButton.setFont(fb);
 
+        //TextArea1 setting
+        Font ft = new Font("TimesRoman",Font.ITALIC,20);
+        textArea1.setText("Click SEND/Press Control+Enter");
+        textArea1.setFont(ft);
+
+        //"Enter+Control" keyboard monitor
+        textArea1.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // TODO Auto-generated method stub
+                if(e.getKeyCode()==KeyEvent.VK_ENTER &&e.isControlDown()) {
+					/*
+					* This part is used to pick up Photo
+					* */
+					JFileChooser f = new JFileChooser();
+					f.showDialog(null,"Pick-up Picture");
+
+                    /*This part is used to change font format
+					 * */
+                    SimpleAttributeSet attrset = new SimpleAttributeSet();
+                    SimpleAttributeSet attrset_Time = new SimpleAttributeSet();
+                    StyleConstants.setFontSize(attrset, 24);
+                    StyleConstants.setBold(attrset_Time, true);
+                    StyleConstants.setBackground(attrset, Color.PINK);
+                    StyleConstants.setFontSize(attrset_Time, 15);
+                    Date date = new Date();
+					/*This part is insert content
+					 * PROBLEM:1) Label need to change the font style!!!
+					 * PROBLEM:2) Different messages need to be placed in right/left side
+					 */
+                    Document docs = textPane1.getDocument();
+                    ImageIcon image;
+					/*
+					 * Both comments are used to input different formats for JTextPane
+					 * */
+                    try {
+                        docs.insertString(docs.getLength(), date.toString()+"\n", attrset_Time);
+                        insertImageIcon(f.getSelectedFile());
+                        docs.insertString(docs.getLength(), textArea1.getText().trim()+"\n", attrset);
+                    } catch (BadLocationException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+
+            }
+            private void insertImageIcon(File file){
+                ImageIcon image1 = new ImageIcon(file.getPath());
+                image1.setImage(image1.getImage().getScaledInstance(30,30, Image.SCALE_AREA_AVERAGING));
+                textPane1.insertIcon(image1);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+
+        //"Enter_Button" keyboard monitor
+        sendButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                    //Output Format
+                    SimpleAttributeSet setWord = new SimpleAttributeSet();
+                    SimpleAttributeSet setTime = new SimpleAttributeSet();
+                    StyleConstants.setFontSize(setWord, 24);
+                    StyleConstants.setBold(setTime,true);
+                    StyleConstants.setBackground(setWord,Color.PINK);
+                    StyleConstants.setFontSize(setTime,15);
+                    Date date = new Date();
+
+                    //JTextPane input setting
+                    Document docs = textPane1.getDocument();
+                    ImageIcon image;
+                    try{
+                        docs.insertString(docs.getLength(),date.toString()+"\n",setTime);
+                        image = new ImageIcon("lzh/hippo.png");
+                        image.setImage(image.getImage().getScaledInstance(30,30,Image.SCALE_AREA_AVERAGING));
+                        textPane1.insertIcon(image);
+                        docs.insertString(docs.getLength(),textArea1.getText().trim()+"\n",setWord);
+                    } catch(BadLocationException e1) {
+                        e1.printStackTrace();
+                    }
+            }
+        });
+        /**
+         * This part is written by LZH
+         * Chat Window
+         * */
 
 //click color bt
         bt_color.addMouseListener(new MouseAdapter() {
