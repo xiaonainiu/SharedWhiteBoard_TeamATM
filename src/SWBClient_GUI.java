@@ -219,6 +219,7 @@ public class SWBClient_GUI {
                         docs.insertString(docs.getLength(), date.toString()+"\n", attrset_Time);
                         insertImageIcon(f.getSelectedFile());
                         docs.insertString(docs.getLength(), textArea1.getText().trim()+"\n", attrset);
+                        textArea1.setText("");
                     } catch (BadLocationException e1) {
                         e1.printStackTrace();
                     }
@@ -268,6 +269,7 @@ public class SWBClient_GUI {
                         image.setImage(image.getImage().getScaledInstance(30,30,Image.SCALE_AREA_AVERAGING));
                         textPane1.insertIcon(image);
                         docs.insertString(docs.getLength(),textArea1.getText().trim()+"\n",setWord);
+                        textArea1.setText("");
                     } catch(BadLocationException e1) {
                         e1.printStackTrace();
                     }
