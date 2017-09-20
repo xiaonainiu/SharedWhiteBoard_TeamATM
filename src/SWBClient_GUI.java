@@ -9,7 +9,8 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.text.Document;
 import java.io.File;
-
+import org.json.*;
+import java.util.HashMap;
 /**
  * Created by ES on 2017/9/14.
  */
@@ -55,6 +56,7 @@ public class SWBClient_GUI {
     private Color color = Color.black;
     private Color eraser_color = Color.white;
     private String state = "pencil";
+    LoginWindow logname = new LoginWindow();
 
     public SWBClient_GUI() {
 //        set color
@@ -191,47 +193,53 @@ public class SWBClient_GUI {
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
                 if(e.getKeyCode()==KeyEvent.VK_ENTER &&e.isControlDown()) {
-					/*
-					* This part is used to pick up Photo
-					* */
-					JFileChooser f = new JFileChooser();
-					f.showDialog(null,"Pick-up Picture");
-
                     /*This part is used to change font format
 					 * */
                     SimpleAttributeSet attrset = new SimpleAttributeSet();
                     SimpleAttributeSet attrset_Time = new SimpleAttributeSet();
+                    SimpleAttributeSet attrset_selfusername = new SimpleAttributeSet();
                     StyleConstants.setFontSize(attrset, 24);
                     StyleConstants.setBold(attrset_Time, true);
                     StyleConstants.setBackground(attrset, Color.PINK);
                     StyleConstants.setFontSize(attrset_Time, 15);
+                    StyleConstants.setBackground(attrset_selfusername,Color.BLACK);
+                    StyleConstants.setForeground(attrset_selfusername,Color.white);
+                    StyleConstants.setFontSize(attrset_selfusername,30);
                     Date date = new Date();
 					/*This part is insert content
 					 * PROBLEM:1) Label need to change the font style!!!
 					 * PROBLEM:2) Different messages need to be placed in right/left side
 					 */
                     Document docs = textPane1.getDocument();
-                    ImageIcon image;
 					/*
 					 * Both comments are used to input different formats for JTextPane
 					 * */
                     try {
-                        docs.insertString(docs.getLength(), date.toString()+"\n", attrset_Time);
-                        insertImageIcon(f.getSelectedFile());
-                        docs.insertString(docs.getLength(), textArea1.getText().trim()+"\n", attrset);
-                        textArea1.setText("");
+                        if(textArea1.getText().length()!=0) {
+                            docs.insertString(docs.getLength(), date.toString() + "\n", attrset_Time);
+                            docs.insertString(docs.getLength(), logname.loginName.trim() + ":", attrset_selfusername);
+                            docs.insertString(docs.getLength(), "  ", null);
+                            docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", attrset);
+                            HashMap<String,String> map = new HashMap<String,String>();
+                            map.put("State","ChatWindow");
+                            map.put("UserName",logname.loginName.trim());
+                            map.put("Content", textArea1.getText());
+                            /*
+                            *This "message" is JSON OBJECT, if need transmit String,
+                            * you need use "message.toString();"
+                             */
+                            JSONObject message = new JSONObject(map);
+                            textArea1.setText("");
+                        }
+                        else {
+                            textArea1.setText("Input can not be EMPTY");
+                        }
                     } catch (BadLocationException e1) {
                         e1.printStackTrace();
                     }
                 }
 
             }
-            private void insertImageIcon(File file){
-                ImageIcon image1 = new ImageIcon(file.getPath());
-                image1.setImage(image1.getImage().getScaledInstance(30,30, Image.SCALE_AREA_AVERAGING));
-                textPane1.insertIcon(image1);
-            }
-
             @Override
             public void keyReleased(KeyEvent arg0) {
                 // TODO Auto-generated method stub
@@ -254,6 +262,10 @@ public class SWBClient_GUI {
                     //Output Format
                     SimpleAttributeSet setWord = new SimpleAttributeSet();
                     SimpleAttributeSet setTime = new SimpleAttributeSet();
+                    SimpleAttributeSet attrset_selfusername = new SimpleAttributeSet();
+                    StyleConstants.setBackground(attrset_selfusername,Color.BLACK);
+                    StyleConstants.setForeground(attrset_selfusername,Color.white);
+                    StyleConstants.setFontSize(attrset_selfusername,30);
                     StyleConstants.setFontSize(setWord, 24);
                     StyleConstants.setBold(setTime,true);
                     StyleConstants.setBackground(setWord,Color.PINK);
@@ -262,14 +274,27 @@ public class SWBClient_GUI {
 
                     //JTextPane input setting
                     Document docs = textPane1.getDocument();
-                    ImageIcon image;
                     try{
-                        docs.insertString(docs.getLength(),date.toString()+"\n",setTime);
-                        image = new ImageIcon("lzh/hippo.png");
-                        image.setImage(image.getImage().getScaledInstance(30,30,Image.SCALE_AREA_AVERAGING));
-                        textPane1.insertIcon(image);
-                        docs.insertString(docs.getLength(),textArea1.getText().trim()+"\n",setWord);
-                        textArea1.setText("");
+                        if(textArea1.getText().length()!=0) {
+                            docs.insertString(docs.getLength(), date.toString() + "\n", setTime);
+                            docs.insertString(docs.getLength(), logname.loginName.trim() + ":", attrset_selfusername);
+                            docs.insertString(docs.getLength(), "  ", null);
+                            docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", setWord);
+                            HashMap<String,String> map = new HashMap<String,String>();
+                            map.put("State","ChatWindow");
+                            map.put("UserName",logname.loginName.trim());
+                            map.put("Content", textArea1.getText());
+                            /*
+                            *This "message" is JSON OBJECT, if need transmit String,
+                            * you need use "message.toString();"
+                             */
+                            JSONObject message = new JSONObject(map);
+                            textArea1.setText("");
+
+                        }
+                        else {
+                            textArea1.setText("Input can not be EMPTY");
+                        }
                     } catch(BadLocationException e1) {
                         e1.printStackTrace();
                     }
@@ -361,6 +386,7 @@ public class SWBClient_GUI {
         frame.setContentPane(new SWBClient_GUI().mainWindow);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setResizable(false); // edit by LZH
         frame.setVisible(true);
     }
 
