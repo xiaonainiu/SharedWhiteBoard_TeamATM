@@ -47,7 +47,7 @@ public class SWBClient_GUI {
     private JPanel cl105;
     private JButton bt_eraser;
     private JComboBox cb_eraser;
-    private JTextPane textPane1; //chatwindow
+    public JTextPane textPane1; //chatwindow, change into static
     private int startx;
     private int starty;
     private int x;
@@ -56,7 +56,7 @@ public class SWBClient_GUI {
     private Color color = Color.black;
     private Color eraser_color = Color.white;
     private String state = "pencil";
-    LoginWindow logname = new LoginWindow();
+    LoginWindow log = new LoginWindow();
 
     public SWBClient_GUI() {
 //        set color
@@ -217,13 +217,15 @@ public class SWBClient_GUI {
                     try {
                         if(textArea1.getText().length()!=0) {
                             docs.insertString(docs.getLength(), date.toString() + "\n", attrset_Time);
-                            docs.insertString(docs.getLength(), logname.loginName.trim() + ":", attrset_selfusername);
+                            docs.insertString(docs.getLength(), log.loginName.trim() + ":", attrset_selfusername);
                             docs.insertString(docs.getLength(), "  ", null);
                             docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", attrset);
                             HashMap<String,String> map = new HashMap<String,String>();
-                            map.put("type","ChatWindow");
-                            map.put("UserName",logname.loginName.trim());
-                            map.put("Content", textArea1.getText());
+                            map.put("type","chatWindow");
+                            map.put("userName",log.loginName.trim());
+                            map.put("content", textArea1.getText());
+                            map.put("ip",log.textField_ip.getText());
+                            map.put("port",log.textField_port.getText());
                             /*
                             *This "message" is JSON OBJECT, if need transmit String,
                             * you need use "message.toString();"
@@ -277,13 +279,15 @@ public class SWBClient_GUI {
                     try{
                         if(textArea1.getText().length()!=0) {
                             docs.insertString(docs.getLength(), date.toString() + "\n", setTime);
-                            docs.insertString(docs.getLength(), logname.loginName.trim() + ":", attrset_selfusername);
+                            docs.insertString(docs.getLength(), log.loginName.trim() + ":", attrset_selfusername);
                             docs.insertString(docs.getLength(), "  ", null);
                             docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", setWord);
                             HashMap<String,String> map = new HashMap<String,String>();
-                            map.put("State","ChatWindow");
-                            map.put("UserName",logname.loginName.trim());
-                            map.put("Content", textArea1.getText());
+                            map.put("type","chatWindow");
+                            map.put("userName",log.loginName.trim());
+                            map.put("content", textArea1.getText());
+                            map.put("ip",log.textField_ip.getText());
+                            map.put("port",log.textField_port.getText());
                             /*
                             *This "message" is JSON OBJECT, if need transmit String,
                             * you need use "message.toString();"

@@ -1,5 +1,9 @@
 import org.json.JSONObject;
 
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -116,7 +120,42 @@ public class SWBClient {
                 if ((socket_inputStr = client.dis.readUTF()) != null){
                     //get the command and make operation
                     HashMap<String,String> map = new HashMap<String,String>();
-                    JSONObject massage = new JSONObject(socket_inputStr);
+                    JSONObject message = new JSONObject(socket_inputStr);
+                    /*
+                    * Edited by LZH
+                    * */
+                    switch (message.toString()){
+                        case "chatWindow":
+                            SWBClient_GUI client_ui = new SWBClient_GUI();
+                            SimpleAttributeSet attrset_receiver = new SimpleAttributeSet();
+                            SimpleAttributeSet attrset_time = new SimpleAttributeSet();
+                            SimpleAttributeSet attrset_selfusername = new SimpleAttributeSet();
+
+                            StyleConstants.setFontSize(attrset_receiver, 24);
+                            StyleConstants.setBackground(attrset_receiver, Color.BLUE);
+
+                            StyleConstants.setBold(attrset_time, true);
+                            StyleConstants.setFontSize(attrset_time, 15);
+
+                            StyleConstants.setFontSize(attrset_selfusername,30);
+                            StyleConstants.setBackground(attrset_selfusername,Color.BLACK);
+                            StyleConstants.setForeground(attrset_selfusername,Color.white);
+                            Date date = new Date();
+                            Document docs = client_ui.textPane1.getDocument();
+                        try{
+                            docs.insertString(docs.getLength(), date.toString() + "\n", attrset_time);
+                            docs.insertString(docs.getLength(), message.getString("userName").trim() + ":", attrset_selfusername);
+                            docs.insertString(docs.getLength(), "  ", null);
+                            docs.insertString(docs.getLength(), message.getString("content").trim() + "\n", attrset_receiver);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        default:
+                            System.out.println("Input other operations");
+                    }
+                    /*
+                    * Edited by LZH
+                    * */
                     System.out.println("From IP: "+client.socket.getInetAddress()+","+client.socket.getPort()+": "+inputStr);
                 }
 
