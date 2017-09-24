@@ -221,7 +221,7 @@ public class SWBClient_GUI {
                             docs.insertString(docs.getLength(), "  ", null);
                             docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", attrset);
                             HashMap<String,String> map = new HashMap<String,String>();
-                            map.put("State","ChatWindow");
+                            map.put("type","ChatWindow");
                             map.put("UserName",logname.loginName.trim());
                             map.put("Content", textArea1.getText());
                             /*
