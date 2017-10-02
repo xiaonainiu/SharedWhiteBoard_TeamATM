@@ -7,13 +7,13 @@ public class Game {
     String port;
     String player1;
     String player1ip;
-    String player1prot;
+    String player1port;
     String player2;
     String player2ip;
-    String player2prot;
+    String player2port;
     String player3;
     String player3ip;
-    String player3prot;
+    String player3port;
     String picture;
 
     public Game(String manager, String ip, String port) {
@@ -43,19 +43,45 @@ public class Game {
         if (player1 == null){
             this.player1 = player;
             this.player1ip = ip;
-            this.player1prot = port;
+            this.player1port = port;
             return 1;
         }else if(player2 == null){
             this.player2 = player;
             this.player2ip = ip;
-            this.player2prot = port;
+            this.player2port = port;
             return 2;
         }else if(player3 == null){
             this.player3 = player;
             this.player3ip = ip;
-            this.player3prot = port;
+            this.player3port = port;
             return 3;
         }
         return -1;
     }
+
+    public boolean checkGame(String ip, String port){
+        boolean result = this.ip.equals(ip) && this.port.equals(port);
+        return result;
+    }
+
+    public String[] getUser(){
+        String[] user = {manager,player1,player2,player3};
+        return user;
+    }
+//    public String[][] getUser(){
+//        String[][] user = new String[4][3];
+//        user[0][0] = manager;
+//        user[0][1] = ip;
+//        user[0][2] = port;
+//        user[1][0] = player1;
+//        user[1][1] = player1ip;
+//        user[1][2] = player1port;
+//        user[2][0] = player2;
+//        user[2][1] = player2ip;
+//        user[2][2] = player2port;
+//        user[3][0] = player3;
+//        user[3][1] = player3ip;
+//        user[3][2] = player3port;
+//        return user;
+//    }
 }

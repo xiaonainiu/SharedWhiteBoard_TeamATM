@@ -12,6 +12,7 @@ import java.util.*;
 public class SWBServer {
     ServerSocket serverSocket;
     static List<Game> gameList = new ArrayList<>();
+    static HashMap<String,Socket> socketList = new HashMap<>();
 
 
     public static void main(String[] args){
@@ -63,7 +64,7 @@ public class SWBServer {
 
                 if ((inputStr = dis.readUTF())!=null){
                     HashMap<String,String> map = new HashMap<String,String>();
-                    String reply_tpye;
+                    String reply_type;
                     String result;
                     JSONObject reply_massage;
                     String reply_massageStr;
@@ -80,13 +81,14 @@ public class SWBServer {
                                 if (checkGameExist(c_info) == -1){
                                     Game game = new Game(manager, ip, port);
                                     gameList.add(game);
+                                    socketList.put(manager,socket);
                                     System.out.println("size: "+gameList.size());
                                     result = "true";
                                 }else {
                                     result = "false";
                                 }
-                                reply_tpye = "createFeedback";
-                                map.put("type",reply_tpye);
+                                reply_type = "createFeedback";
+                                map.put("type",reply_type);
                                 map.put("result",result);
                                 map.put("ip",ip);
                                 map.put("port",port);
@@ -114,6 +116,7 @@ public class SWBServer {
                                     if (playerNumber==-1){
                                         result = "false";
                                     }else {
+                                        socketList.put(j_player,socket);
                                         result = "true";
                                     }
                                 }
@@ -121,8 +124,8 @@ public class SWBServer {
 
 //                                gameList.add(game);
 
-                                reply_tpye = "joinFeedback";
-                                map.put("type",reply_tpye);
+                                reply_type = "joinFeedback";
+                                map.put("type",reply_type);
                                 map.put("result",result);
                                 map.put("playernumber",String.valueOf(playerNumber));
                                 reply_massage = new JSONObject(map);
@@ -131,7 +134,20 @@ public class SWBServer {
                                 dos.writeUTF(reply_massageStr);
                                 break;
                             case "chat":
-                                
+                                String chat_player = massage.getString("player");
+                                String chat_ip = massage.getString("ip");
+                                String chat_port = massage.getString("port");
+                                for (int i = 0; i < gameList.size(); i++){
+                                    if (gameList.get(i).checkGame(chat_ip,chat_port)){
+                                        String[] user = gameList.get(i).getUser();
+                                        for (int j = 0; j < 4; j++){
+                                            if (user[j] != null && !user[j].equals(chat_player)){
+                                                DataOutputStream chatStream = new DataOutputStream(socketList.get(user[j]).getOutputStream() );
+                                                chatStream.writeUTF(inputStr);
+                                            }
+                                        }
+                                    }
+                                }
                             case "draw":
                                 String d_pic = massage.getString("pic");
                                 break;
