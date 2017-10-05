@@ -49,7 +49,7 @@ public class SWBClient_GUI extends JFrame {
     private JPanel cl105;
     private JButton bt_eraser;
     private JComboBox cb_eraser;
-    private JTextPane textPane1; //chatwindow
+    public JTextPane textPane1; //chatwindow
     private JButton bt_line;
     private JButton bt_rect;
     private JButton bt_circle;
@@ -57,11 +57,14 @@ public class SWBClient_GUI extends JFrame {
     private JButton bt_polygon;
     private JComboBox cb_shape;
     private JButton bt_text;
-    private JTextField textField1;
+    //private JTextField textField1;
     private JPanel panel;
     private JCheckBox check_fill;
     private JButton bt_square;
     private JCheckBox checkBox1;
+    private JButton bt_exit;
+    private JTextArea textArea2;
+    private JButton bt_undo;
     private int startx;
     private int starty;
     private int x;
@@ -69,7 +72,7 @@ public class SWBClient_GUI extends JFrame {
     Graphics g;
     private Color color = Color.black;
     private Color eraser_color = Color.white;
-    private String state = "pencil";
+    private String state = "";
     LoginWindow logname = new LoginWindow();
     LinkedList<Shape> shapeList = new LinkedList<Shape>();
     Shape shape;
@@ -85,6 +88,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(0, 0, 0);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl111.addMouseListener(new MouseAdapter() {
@@ -92,6 +100,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(255, 255, 255);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl666.addMouseListener(new MouseAdapter() {
@@ -99,6 +112,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(102, 102, 102);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         clccc.addMouseListener(new MouseAdapter() {
@@ -106,6 +124,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(204, 204, 204);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl100.addMouseListener(new MouseAdapter() {
@@ -113,6 +136,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(255, 0, 0);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_red.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl150.addMouseListener(new MouseAdapter() {
@@ -120,6 +148,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(255, 128, 0);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl110.addMouseListener(new MouseAdapter() {
@@ -127,6 +160,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(255, 255, 0);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl510.addMouseListener(new MouseAdapter() {
@@ -134,6 +172,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(128, 255, 0);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl010.addMouseListener(new MouseAdapter() {
@@ -141,6 +184,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(0, 255, 0);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl015.addMouseListener(new MouseAdapter() {
@@ -148,6 +196,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(0, 255, 128);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl011.addMouseListener(new MouseAdapter() {
@@ -155,6 +208,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(0, 255, 255);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl051.addMouseListener(new MouseAdapter() {
@@ -162,6 +220,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(0, 128, 255);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl001.addMouseListener(new MouseAdapter() {
@@ -169,6 +232,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(0, 0, 255);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl501.addMouseListener(new MouseAdapter() {
@@ -176,6 +244,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(128, 0, 255);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_purple.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl101.addMouseListener(new MouseAdapter() {
@@ -183,6 +256,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(255, 0, 255);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_pink.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
         cl105.addMouseListener(new MouseAdapter() {
@@ -190,6 +268,11 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 color = new Color(255, 0, 128);
+                if(state == "pencil")
+                {
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_pink.png").getImage(), new Point(2, 28), "eraser");
+                    board.setCursor(cursor);
+                }
             }
         });
 
@@ -356,7 +439,7 @@ public class SWBClient_GUI extends JFrame {
                     tempy2 = shape.y2;
                     shapeList.remove(shape);
                 } else {
-                    shape = null;
+                    //shape = null;
                 }
             }
         });
@@ -576,7 +659,8 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 state = "pencil";
-                board.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "eraser");
+                board.setCursor(cursor);
             }
         });
         bt_eraser.addMouseListener(new MouseAdapter() {
@@ -584,7 +668,7 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 state = "eraser";
-                java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("lzh/hippo.png").getImage(), new Point(10, 20), "eraser");
+                java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/eraser.png").getImage(), new Point(2, 28), "eraser");
                 board.setCursor(cursor);
             }
         });
@@ -643,11 +727,11 @@ public class SWBClient_GUI extends JFrame {
                     x = e.getX();
                     y = e.getY();
                     if (cb_shape.getSelectedItem() == "thin")
-                        shape = new Text(startx, starty, g.getColor(), 1, textField1.getText());
+                        shape = new Text(startx, starty, g.getColor(), 1, textArea2.getText());
                     else if (cb_shape.getSelectedItem() == "normal")
-                        shape = new Text(startx, starty, g.getColor(), 2, textField1.getText());
+                        shape = new Text(startx, starty, g.getColor(), 2, textArea2.getText());
                     else
-                        shape = new Text(startx, starty, g.getColor(), 5, textField1.getText());
+                        shape = new Text(startx, starty, g.getColor(), 5, textArea2.getText());
                     repaint();
                     text_info.setText("Position: (" + x + "," + y + ")");
                 }
@@ -674,6 +758,8 @@ public class SWBClient_GUI extends JFrame {
                 board.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 if (value == 0) {
                     saveFile();
+                    shapeList.removeAll(shapeList);
+                    board.repaint();
                 }
                 if (value == 1) {
                     shapeList.removeAll(shapeList);
@@ -745,6 +831,31 @@ public class SWBClient_GUI extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 i = e.getStateChange();
+            }
+        });
+        bt_exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int value = JOptionPane.showConfirmDialog(null, "Save current painting?", "Confirm", 0);
+                board.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                if (value == 0) {
+                    saveFile();
+                    System.exit(0);
+                }
+                if (value == 1) {
+                    System.exit(0);
+                }
+            }
+        });
+        bt_undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(shapeList.size() > 0)
+                {
+                    shapeList.removeLast();
+                    shape = null;
+                    repaint();
+                }
             }
         });
     }
