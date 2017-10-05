@@ -133,7 +133,7 @@ public class SWBServer {
                                 System.out.println(reply_massageStr);
                                 dos.writeUTF(reply_massageStr);
                                 break;
-                            case "chat":
+                            case "chatWindow":
                                 String chat_player = massage.getString("player");
                                 String chat_ip = massage.getString("ip");
                                 String chat_port = massage.getString("port");
