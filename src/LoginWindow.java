@@ -17,13 +17,15 @@ public class LoginWindow {
     public JTextField textField_port;
     private JLabel IP; //edit by lzh
     private JLabel Port; //edit by lzh
+    private JButton button2;
     static boolean flag = false;
     static JFrame frame;
     static String loginName;
     String ip_regex ="((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
     String number = "^-?[0-9]+$";
     public LoginWindow() {
-        button1.setText("Login");
+        button1.setText("Join");
+        button2.setText("Creat");
         textField1.setText("player");
         label1.setText("Please input your UserName");
         IP.setText("IP Address");
