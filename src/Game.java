@@ -64,6 +64,10 @@ public class Game {
         return result;
     }
 
+    public boolean checkEmptySit(){
+        return player1==null||player2==null||player3==null;
+    }
+
     public String[] getUser(){
         String[] user = {manager,player1,player2,player3};
         return user;
