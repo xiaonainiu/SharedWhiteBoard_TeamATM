@@ -72,20 +72,7 @@ public class Game {
         String[] user = {manager,player1,player2,player3};
         return user;
     }
-//    public String[][] getUser(){
-//        String[][] user = new String[4][3];
-//        user[0][0] = manager;
-//        user[0][1] = ip;
-//        user[0][2] = port;
-//        user[1][0] = player1;
-//        user[1][1] = player1ip;
-//        user[1][2] = player1port;
-//        user[2][0] = player2;
-//        user[2][1] = player2ip;
-//        user[2][2] = player2port;
-//        user[3][0] = player3;
-//        user[3][1] = player3ip;
-//        user[3][2] = player3port;
-//        return user;
-//    }
+    public boolean checkUser(String user){
+        return player1==user||player2==user||player3==user;
+    }
 }

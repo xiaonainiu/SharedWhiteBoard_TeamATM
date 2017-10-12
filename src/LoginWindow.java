@@ -5,30 +5,28 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.regex.*;
 
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
-import org.json.*;
-
 public class LoginWindow {
     private JTextField textField1;
-    private JButton button1;
+    private JButton bt_create;
     private JLabel label1;
     private JPanel mainWindow;
     public JTextField textField_ip;
     public JTextField textField_port;
     private JLabel IP; //edit by lzh
     private JLabel Port; //edit by lzh
+    private JButton joinButton;
     static boolean flag = false;
     static JFrame frame;
     static String loginName;
     String ip_regex ="((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
     String number = "^-?[0-9]+$";
     public LoginWindow() {
-        button1.setText("Login");
+        bt_create.setText("Login");
         textField1.setText("player");
         label1.setText("Please input your UserName");
         IP.setText("IP Address");
         Port.setText("Port Number");
-        button1.addMouseListener(new MouseAdapter() {
+        bt_create.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);

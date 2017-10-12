@@ -76,6 +76,7 @@ public class SWBServer {
                     String ip;
                     String port;
                     String manager;
+                    String user;
                     String[] info = new String[2];
                     String[] userList;
                     int userNumber;
@@ -135,6 +136,8 @@ public class SWBServer {
                                 if (gameIndex==-1){
                                     dos.writeUTF(reply_massageStr);
                                     socketList.remove(join_user);
+                                    dos.close();
+                                    socket.close();
                                     System.out.println("game is not exist");
                                 }else {
                                     if (gameList.get(gameIndex).checkEmptySit()){
@@ -143,6 +146,8 @@ public class SWBServer {
                                     }else {
                                         dos.writeUTF(reply_massageStr);
                                         socketList.remove((join_user));
+                                        dos.close();
+                                        socket.close();
                                         System.out.println("game is full");
                                     }
                                 }
@@ -163,8 +168,11 @@ public class SWBServer {
                                         map.put("result",result);
                                         reply_massage = new JSONObject(map);
                                         reply_massageStr = reply_massage.toString();
-                                        DataOutputStream joinStream = new DataOutputStream(socketList.get(gameList.get(gameIndex).manager).getOutputStream());
+                                        dos.writeUTF(reply_massageStr);
+                                        DataOutputStream joinStream = new DataOutputStream(socketList.get(join_fb_user).getOutputStream());
                                         joinStream.writeUTF(reply_massageStr);
+                                        joinStream.close();
+                                        socketList.get(join_fb_user).close();
                                         socketList.remove(join_fb_user);
                                     }else {
                                         pic = gameList.get(gameIndex).picture;
@@ -200,18 +208,18 @@ public class SWBServer {
                                     }
                                 }
                             case "draw":
-                                String draw_ip = massage.getString("ip");
-                                String draw_port = massage.getString("port");
+                                ip = massage.getString("ip");
+                                port = massage.getString("port");
                                 String draw_user = massage.getString("manager");
-                                String draw_pic = massage.getString("pic");
-                                String[] draw_info = {draw_ip,draw_port};
+                                pic = massage.getString("pic");
+                                String[] draw_info = {ip,port};
                                 gameIndex = checkGameExist(draw_info);
                                 if (gameIndex!=-1){
-                                    gameList.get(gameIndex).picture = draw_pic;
-                                    String[] user = gameList.get(gameIndex).getUser();
+                                    gameList.get(gameIndex).picture = pic;
+                                    userList = gameList.get(gameIndex).getUser();
                                     for (int j = 0; j < 4; j++){
-                                        if (user[j] != null && !user[j].equals(draw_user)){
-                                            DataOutputStream chatStream = new DataOutputStream(socketList.get(user[j]).getOutputStream() );
+                                        if (userList[j] != null && !userList[j].equals(draw_user)){
+                                            DataOutputStream chatStream = new DataOutputStream(socketList.get(userList[j]).getOutputStream() );
                                             chatStream.writeUTF(inputStr);
                                         }
                                     }
@@ -219,7 +227,40 @@ public class SWBServer {
                                     //if the game is close
                                 }
                             case "kick":
-                                break;
+                                ip = massage.getString("ip");
+                                port = massage.getString("port");
+                                user = massage.getString("user");
+                                manager = massage.getString("manager");
+
+                                reply_type="kickFeedback";
+                                map.put("type",reply_type);
+                                map.put("result","false");
+                                reply_massage = new JSONObject(map);
+                                reply_massageStr = reply_massage.toString();
+                                System.out.println(reply_massageStr);
+
+                                info[0]=ip;
+                                info[1]=port;
+                                gameIndex = checkGameExist(info);
+                                if (gameIndex!=-1 && gameList.get(gameIndex).manager.equals(manager)){
+                                    if (gameList.get(gameIndex).checkUser(user)){
+                                        userList = gameList.get(gameIndex).getUser();
+                                        for (int j = 0; j < 4; j++){
+                                            if (userList[j] != null){
+                                                DataOutputStream chatStream = new DataOutputStream(socketList.get(userList[j]).getOutputStream() );
+                                                chatStream.writeUTF(inputStr);
+                                            }else {
+                                                dos.writeUTF(reply_massageStr);
+                                                System.out.println("user is not exist");
+                                            }
+                                        }
+                                        socketList.get(user).close();
+                                        socketList.remove(user);
+                                    }
+                                }else {
+                                    dos.writeUTF(reply_massageStr);
+                                    System.out.println("game is not exist");
+                                }
 
                             default:
                                 System.out.println("Invalid input");
@@ -260,7 +301,6 @@ public class SWBServer {
         try{
             for (int i = 0; i < gameList.size(); i++){
                 String[] game_info = gameList.get(i).getGameInfo();
-//                System.out.println(game_info.equals(info));
                 if (game_info[0].equals(info[0]) && game_info[1].equals(info[1])){
                     return i;
                 }
