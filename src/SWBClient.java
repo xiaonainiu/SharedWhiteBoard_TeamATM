@@ -173,23 +173,4 @@ public class SWBClient {
 
         }
     }
-
-//    private static boolean checkValid(String[] inputStrSplit){
-//        try{
-//            switch (inputStrSplit[0]){
-//                case "create":
-//                    return inputStrSplit.length==4;
-//                case "join":
-//                    return inputStrSplit.length==4;
-//                case "draw":
-//                    return inputStrSplit.length==2;
-//                case "kick":
-//                    return inputStrSplit.length==2;
-//                default:
-//                    return false;
-//            }
-//        }catch (ArrayIndexOutOfBoundsException e){
-//            return false;
-//        }
-//    }
 }

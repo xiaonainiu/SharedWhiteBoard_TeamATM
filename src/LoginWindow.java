@@ -1,11 +1,7 @@
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.regex.*;
-
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
 import org.json.*;
 
 public class LoginWindow {
@@ -13,10 +9,11 @@ public class LoginWindow {
     private JButton button1;
     private JLabel label1;
     private JPanel mainWindow;
-    public JTextField textField_ip;
-    public JTextField textField_port;
+    private JTextField textField_ip;
+    private JTextField textField_port;
     private JLabel IP; //edit by lzh
     private JLabel Port; //edit by lzh
+
     private JButton button2;
     static boolean flag = false;
     static JFrame frame;
@@ -24,6 +21,7 @@ public class LoginWindow {
     String ip_regex ="((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
     String number = "^-?[0-9]+$";
     public LoginWindow() {
+
         button1.setText("Join");
         button2.setText("Creat");
         textField1.setText("player");
@@ -40,10 +38,15 @@ public class LoginWindow {
                 Matcher m_number = p_number.matcher(textField_port.getText());
                 if(m_ip.find() && m_number.find() && Integer.parseInt(textField_port.getText())<65536 && Integer.parseInt(textField_port.getText())>1024) {
                     String[] s = null;
-                    SWBClient_GUI.main(s);
-                    frame.dispose();
+//                    SWBClient_GUI.main(s);
+//                    frame.dispose();
                     // Need judgement and database
-                    loginName = textField1.getText();
+                    JSONObject message = new JSONObject();
+                    message.put("type","create");
+                    message.put("username",textField1.getText());
+                    message.put("ip",textField_ip.getText());
+                    message.put("port",textField_port.getText());
+                    System.out.print(message);
                 }
                 else{
                     textField_port.setText("Wrong Format");
@@ -51,19 +54,45 @@ public class LoginWindow {
                 }
             }
         });
-        textField1.addKeyListener(new KeyAdapter() {
+        button2.addMouseListener(new MouseAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                Pattern p_ip = Pattern.compile(ip_regex);
+                Pattern p_number = Pattern.compile(number);
+                Matcher m_ip = p_ip.matcher(textField_ip.getText());
+                Matcher m_number = p_number.matcher(textField_port.getText());
+                if(m_ip.find() && m_number.find() && Integer.parseInt(textField_port.getText())<65536 && Integer.parseInt(textField_port.getText())>1024) {
                     String[] s = null;
-                    SWBClient_GUI.main(s);
-                    frame.dispose();
+//                    SWBClient_GUI.main(s);
+//                    frame.dispose();
                     // Need judgement and database
-                    loginName = textField1.getText();
+                    JSONObject message = new JSONObject();
+                    message.put("type","join");
+                    message.put("username",textField1.getText());
+                    message.put("ip",textField_ip.getText());
+                    message.put("port",textField_port.getText());
+                    System.out.print(message);
+                }
+                else{
+                    textField_port.setText("Wrong Format");
+                    textField_ip.setText("Wrong Format");
                 }
             }
         });
+//        textField1.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//                super.keyPressed(e);
+//                if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+//                    String[] s = null;
+//                    SWBClient_GUI.main(s);
+//                    frame.dispose();
+//                    // Need judgement and database
+//                    loginName = textField1.getText();
+//                }
+//            }
+//        });
     }
 
     public static void main(String[] args) {
