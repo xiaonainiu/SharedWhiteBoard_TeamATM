@@ -380,14 +380,23 @@ public class SWBClient_GUI extends JFrame {
                         docs.insertString(docs.getLength(), "  ", null);
                         docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", setWord);
                         HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("State", "ChatWindow");
-                        map.put("UserName", LoginWindow.loginName.trim());
-                        map.put("Content", textArea1.getText());
+                        map.put("type", "chatWindow");
+                        map.put("userName", LoginWindow.loginName.trim());
+                        map.put("content", textArea1.getText());
+                        map.put("ip", "1.1.1.1");
+                        map.put("port", "1111");
                             /*
                             *This "message" is JSON OBJECT, if need transmit String,
                             * you need use "message.toString();"
                              */
                         JSONObject message = new JSONObject(map);
+                        String messageStr = message.toString();
+//                    System.out.println(messageStr);
+                        try {
+                            SWBClient.dos.writeUTF(messageStr);
+                        } catch (IOException exception) {
+                            exception.printStackTrace();
+                        }
                         textArea1.setText("");
                     } else {
                         textArea1.setText("Input can not be EMPTY");

@@ -178,7 +178,7 @@ public class SWBClient {
                             break;
                         //alert : you have been kicked by manager
                         case "chatWindow":
-                            SWBClient_GUI client_ui = new SWBClient_GUI();
+                            //SWBClient_GUI client_ui = new SWBClient_GUI();
                             SimpleAttributeSet attrset_receiver = new SimpleAttributeSet();
                             SimpleAttributeSet attrset_time = new SimpleAttributeSet();
                             SimpleAttributeSet attrset_selfusername = new SimpleAttributeSet();
@@ -193,7 +193,8 @@ public class SWBClient {
                             StyleConstants.setBackground(attrset_selfusername, Color.BLACK);
                             StyleConstants.setForeground(attrset_selfusername, Color.white);
                             Date date = new Date();
-                            Document docs = client_ui.textPane1.getDocument();
+                            //Document docs = client_ui.textPane1.getDocument();
+                            Document docs = gui.textPane1.getDocument();
                             try {
                                 docs.insertString(docs.getLength(), date.toString() + "\n", attrset_time);
                                 docs.insertString(docs.getLength(), message.getString("userName").trim() + ":", attrset_selfusername);

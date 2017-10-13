@@ -197,11 +197,11 @@ public class SWBServer {
                                     }
                                     break;
                                 case "chatWindow":
-                                    String player = message.getString("player");
+                                    //String player = message.getString("player");
                                     if (gameIndex != -1) {
                                         userList = gameList.get(gameIndex).getUser();
                                         for (int j = 0; j < 4; j++) {
-                                            if (userList[j] != null && !userList[j].equals(player)) {
+                                            if (userList[j] != null/* && !userList[j].equals(player)*/) {
                                                 DataOutputStream chatStream = new DataOutputStream(socketList.get(userList[j]).getOutputStream());
                                                 chatStream.writeUTF(inputStr);
                                             }

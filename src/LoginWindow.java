@@ -42,6 +42,7 @@ public class LoginWindow {
                     message.put("user", textField1.getText());
                     message.put("ip", textField_ip.getText());
                     message.put("port", textField_port.getText());
+                    loginName = textField1.getText();
                     String messageStr = message.toString();
 //                    System.out.println(messageStr);
                     try {
