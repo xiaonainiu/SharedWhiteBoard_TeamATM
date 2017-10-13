@@ -11,6 +11,7 @@ import java.util.*;
 import javax.swing.text.Document;
 
 import org.json.*;
+import sun.rmi.runtime.Log;
 
 import java.util.HashMap;
 
@@ -73,7 +74,6 @@ public class SWBClient_GUI extends JFrame {
     private Color color = Color.black;
     private Color eraser_color = Color.white;
     private String state = "";
-    LoginWindow logname = new LoginWindow();
     LinkedList<Shape> shapeList = new LinkedList<Shape>();
     Shape shape;
     int isFill = 2;
@@ -312,13 +312,13 @@ public class SWBClient_GUI extends JFrame {
                     try {
                         if (textArea1.getText().length() != 0) {
                             docs.insertString(docs.getLength(), date.toString() + "\n", attrset_Time);
-                            docs.insertString(docs.getLength(), logname.loginName.trim() + ":", attrset_selfusername);
+                            docs.insertString(docs.getLength(), LoginWindow.loginName.trim() + ":", attrset_selfusername);
                             docs.insertString(docs.getLength(), "  ", null);
                             docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", attrset);
                             System.out.println(textArea1.getText());
                             HashMap<String, String> map = new HashMap<String, String>();
                             map.put("State", "ChatWindow");
-                            map.put("UserName", logname.loginName.trim());
+                            map.put("UserName", LoginWindow.loginName.trim());
                             map.put("Content", textArea1.getText());
                             /*
                             *This "message" is JSON OBJECT, if need transmit String,
@@ -373,12 +373,12 @@ public class SWBClient_GUI extends JFrame {
                 try {
                     if (textArea1.getText().length() != 0) {
                         docs.insertString(docs.getLength(), date.toString() + "\n", setTime);
-                        docs.insertString(docs.getLength(), logname.loginName.trim() + ":", attrset_selfusername);
+                        docs.insertString(docs.getLength(), LoginWindow.loginName.trim() + ":", attrset_selfusername);
                         docs.insertString(docs.getLength(), "  ", null);
                         docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", setWord);
                         HashMap<String, String> map = new HashMap<String, String>();
                         map.put("State", "ChatWindow");
-                        map.put("UserName", logname.loginName.trim());
+                        map.put("UserName", LoginWindow.loginName.trim());
                         map.put("Content", textArea1.getText());
                             /*
                             *This "message" is JSON OBJECT, if need transmit String,

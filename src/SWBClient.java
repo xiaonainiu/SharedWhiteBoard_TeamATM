@@ -36,6 +36,7 @@ public class SWBClient {
         SWBClient client = new SWBClient();
         LoginWindow logWin = new LoginWindow();
 //        SWBClient_GUI gui1 = new SWBClient_GUI();
+//        SWBClient_GUI gui1 = new SWBClient_GUI();
 //        gui1.start();
 //        SWBClient_GUI gui1 = new SWBClient_GUI();
 
