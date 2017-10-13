@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.regex.*;
 import org.json.*;
+//import ShareWhiteBoard_TeamATM.src.*;
 
 public class LoginWindow {
     private JTextField textField1;
@@ -42,11 +44,19 @@ public class LoginWindow {
 //                    frame.dispose();
                     // Need judgement and database
                     JSONObject message = new JSONObject();
-                    message.put("type","create");
-                    message.put("username",textField1.getText());
+                    message.put("type","join");
+                    message.put("user",textField1.getText());
                     message.put("ip",textField_ip.getText());
                     message.put("port",textField_port.getText());
-                    System.out.print(message);
+                    String messageStr = message.toString();
+                    System.out.println(messageStr);
+//                    try {
+//                        SWBClient.dos.writeUTF(messageStr);
+//                    }catch (IOException exception){
+//                        exception.printStackTrace();
+//                    }
+
+//                    System.out.print(message);
                 }
                 else{
                     textField_port.setText("Wrong Format");
@@ -68,11 +78,18 @@ public class LoginWindow {
 //                    frame.dispose();
                     // Need judgement and database
                     JSONObject message = new JSONObject();
-                    message.put("type","join");
-                    message.put("username",textField1.getText());
+                    message.put("type","create");
+                    message.put("manager",textField1.getText());
                     message.put("ip",textField_ip.getText());
                     message.put("port",textField_port.getText());
-                    System.out.print(message);
+//                    System.out.println(message);
+                    String messageStr = message.toString();
+                    System.out.println(messageStr);
+//                    try {
+//                        SWBClient.dos.writeUTF(messageStr);
+//                    }catch (IOException exception){
+//                        exception.printStackTrace();
+//                    }
                 }
                 else{
                     textField_port.setText("Wrong Format");

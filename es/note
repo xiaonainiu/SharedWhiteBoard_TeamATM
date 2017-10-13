@@ -1,0 +1,11 @@
+improve for YM:
+GUI:
+remove main function
+add kick button
+add user information, only manager can use the kick button, if other click kick, alert "you can not kick others"
+add alert function with button(2 options)
+
+improve for LZH:
+LoginWindow:
+remove main function
+add alert function(with close button)

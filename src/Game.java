@@ -75,4 +75,8 @@ public class Game {
     public boolean checkUser(String user){
         return player1==user||player2==user||player3==user;
     }
+
+    public String getManager(){
+        return manager;
+    }
 }
