@@ -3,6 +3,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.regex.*;
+
 import org.json.*;
 //import ShareWhiteBoard_TeamATM.src.*;
 
@@ -31,27 +32,26 @@ public class LoginWindow {
                 Pattern p_number = Pattern.compile(number);
                 Matcher m_ip = p_ip.matcher(textField_ip.getText());
                 Matcher m_number = p_number.matcher(textField_port.getText());
-                if(m_ip.find() && m_number.find() && Integer.parseInt(textField_port.getText())<65536 && Integer.parseInt(textField_port.getText())>1024) {
+                if (m_ip.find() && m_number.find() && Integer.parseInt(textField_port.getText()) < 65536 && Integer.parseInt(textField_port.getText()) > 1024) {
                     String[] s = null;
 //                    SWBClient_GUI.main(s);
 //                    frame.dispose();
                     // Need judgement and database
                     JSONObject message = new JSONObject();
-                    message.put("type","join");
-                    message.put("user",textField1.getText());
-                    message.put("ip",textField_ip.getText());
-                    message.put("port",textField_port.getText());
+                    message.put("type", "join");
+                    message.put("user", textField1.getText());
+                    message.put("ip", textField_ip.getText());
+                    message.put("port", textField_port.getText());
                     String messageStr = message.toString();
                     System.out.println(messageStr);
-//                    try {
-//                        SWBClient.dos.writeUTF(messageStr);
-//                    }catch (IOException exception){
-//                        exception.printStackTrace();
-//                    }
+                    try {
+                        SWBClient.dos.writeUTF(messageStr);
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
 
-//                    System.out.print(message);
-                }
-                else{
+                    System.out.print(message);
+                } else {
                     textField_port.setText("Wrong Format");
                     textField_ip.setText("Wrong Format");
                 }
@@ -65,26 +65,25 @@ public class LoginWindow {
                 Pattern p_number = Pattern.compile(number);
                 Matcher m_ip = p_ip.matcher(textField_ip.getText());
                 Matcher m_number = p_number.matcher(textField_port.getText());
-                if(m_ip.find() && m_number.find() && Integer.parseInt(textField_port.getText())<65536 && Integer.parseInt(textField_port.getText())>1024) {
+                if (m_ip.find() && m_number.find() && Integer.parseInt(textField_port.getText()) < 65536 && Integer.parseInt(textField_port.getText()) > 1024) {
                     String[] s = null;
 //                    SWBClient_GUI.main(s);
 //                    frame.dispose();
                     // Need judgement and database
                     JSONObject message = new JSONObject();
-                    message.put("type","create");
-                    message.put("manager",textField1.getText());
-                    message.put("ip",textField_ip.getText());
-                    message.put("port",textField_port.getText());
+                    message.put("type", "create");
+                    message.put("manager", textField1.getText());
+                    message.put("ip", textField_ip.getText());
+                    message.put("port", textField_port.getText());
 //                    System.out.println(message);
                     String messageStr = message.toString();
-                    System.out.println(messageStr);
+//                    System.out.println(messageStr);
                     try {
                         SWBClient.dos.writeUTF(messageStr);
-                    }catch (IOException exception){
+                    } catch (IOException exception) {
                         exception.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     textField_port.setText("Wrong Format");
                     textField_ip.setText("Wrong Format");
                 }
@@ -130,6 +129,6 @@ public class LoginWindow {
     static boolean flag = false;
     static JFrame frame;
     static String loginName;
-    String ip_regex ="((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
+    String ip_regex = "((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
     String number = "^-?[0-9]+$";
 }

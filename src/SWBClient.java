@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Created by ES on 2017/9/14.
  */
 public class SWBClient {
-//    InputStream is = new InputStream();
+    //    InputStream is = new InputStream();
     private Socket socket;
     static DataOutputStream dos;
     private DataInputStream dis;
@@ -25,7 +25,7 @@ public class SWBClient {
     private String manager;
     private String user;
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 
         /**
          * by ES
@@ -51,7 +51,7 @@ public class SWBClient {
 //        test code
         Scanner keyboard = new Scanner(System.in);
 
-        try{
+        try {
             //                socket = this.socket;
             System.out.println("**1**");
             client.socket = new Socket("127.0.0.1", 1234);
@@ -59,7 +59,7 @@ public class SWBClient {
             client.dos = new DataOutputStream(client.socket.getOutputStream());
 //            LoginWindow.main();
             boolean flag = true;
-            while (flag){
+            while (flag) {
                 System.out.println("**2**");
                 String inputStr = null;
                 String outputStr = null;
@@ -89,10 +89,10 @@ public class SWBClient {
                  * end
                  */
                 System.out.println("paoguole");
-                if ((socket_inputStr = client.dis.readUTF()) != null){
-                    System.out.println("From IP: "+client.socket.getInetAddress()+","+client.socket.getPort()+": "+socket_inputStr);
+                if ((socket_inputStr = client.dis.readUTF()) != null) {
+                    System.out.println("From IP: " + client.socket.getInetAddress() + "," + client.socket.getPort() + ": " + socket_inputStr);
                     //get the command and make operation
-                    HashMap<String,String> map = new HashMap<String,String>();
+                    HashMap<String, String> map = new HashMap<String, String>();
                     JSONObject message = new JSONObject(socket_inputStr);
                     String type = message.getString("type");
                     String ip = message.getString("ip");
@@ -106,12 +106,12 @@ public class SWBClient {
                     /*
                     * Change by ES
                     */
-                    switch (type){
+                    switch (type) {
                         //manager could receive this message:
                         case "createFeedback":
                             System.out.println("**case: createFeedback**");
                             result = message.getString("result");
-                            if (result.equals("true")){
+                            if (result.equals("true")) {
                                 client.ip = ip;
                                 client.port = port;
                                 client.manager = message.getString("manager");
@@ -121,45 +121,45 @@ public class SWBClient {
 //                                logWin.
                                 System.out.println("**already start**");
                                 //open GUI
-                            }else if (result.equals("false")){
+                            } else if (result.equals("false")) {
                                 //alert : create fail
-                            }else {
+                            } else {
                                 //alert : connection fail
                             }
                             break;
                         case "join":
                             user = message.getString("user");
-                            int value = JOptionPane.showConfirmDialog(null, user+" wants to join the game", "Confirm", 0);
+                            int value = JOptionPane.showConfirmDialog(null, user + " wants to join the game", "Confirm", 0);
                             if (value == 0) {
-                                map.put("result","true");
+                                map.put("result", "true");
                             }
                             if (value == 1) {
-                                map.put("result","false");
+                                map.put("result", "false");
                             }
 //                            System.out.println(user+" want to join in the game(true/false):");
 //                            result = keyboard.nextLine();
 
-                            map.put("type","joinFeedback");
-                            map.put("ip",ip);
-                            map.put("port",port);
-                            map.put("manager",client.manager);
-                            map.put("targetUser",user);
+                            map.put("type", "joinFeedback");
+                            map.put("ip", ip);
+                            map.put("port", port);
+                            map.put("manager", client.manager);
+                            map.put("targetUser", user);
                             JSONObject replay_message = new JSONObject(map);
                             String replay_messageStr = replay_message.toString();
                             dos.writeUTF(replay_messageStr);
                         case "joinFeedback":
                             System.out.println("**case: joinFeedback**");
                             result = message.getString("result");
-                            if (result.equals("true")){
+                            if (result.equals("true")) {
                                 client.ip = message.getString("ip");
                                 client.port = message.getString("port");
                                 client.manager = message.getString("manager");
                                 client.user = message.getString("targetUser");
                                 SWBClient_GUI gui = new SWBClient_GUI();
                                 //open GUI
-                            }else if (result.equals("false")){
+                            } else if (result.equals("false")) {
                                 //alert : create fail
-                            }else {
+                            } else {
                                 //alert : connection fail
                             }
                             break;
@@ -169,7 +169,7 @@ public class SWBClient {
                         case "kick":
                             //close GUI
                             break;
-                            //alert : you have been kicked by manager
+                        //alert : you have been kicked by manager
                         case "chatWindow":
                             SWBClient_GUI client_ui = new SWBClient_GUI();
                             SimpleAttributeSet attrset_receiver = new SimpleAttributeSet();
@@ -182,17 +182,17 @@ public class SWBClient {
                             StyleConstants.setBold(attrset_time, true);
                             StyleConstants.setFontSize(attrset_time, 15);
 
-                            StyleConstants.setFontSize(attrset_selfusername,30);
-                            StyleConstants.setBackground(attrset_selfusername,Color.BLACK);
-                            StyleConstants.setForeground(attrset_selfusername,Color.white);
+                            StyleConstants.setFontSize(attrset_selfusername, 30);
+                            StyleConstants.setBackground(attrset_selfusername, Color.BLACK);
+                            StyleConstants.setForeground(attrset_selfusername, Color.white);
                             Date date = new Date();
                             Document docs = client_ui.textPane1.getDocument();
-                            try{
+                            try {
                                 docs.insertString(docs.getLength(), date.toString() + "\n", attrset_time);
                                 docs.insertString(docs.getLength(), message.getString("userName").trim() + ":", attrset_selfusername);
                                 docs.insertString(docs.getLength(), "  ", null);
                                 docs.insertString(docs.getLength(), message.getString("content").trim() + "\n", attrset_receiver);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             break;
@@ -208,13 +208,13 @@ public class SWBClient {
             }
             client.dis.close();
             client.socket.close();
-        }catch (UnknownHostException e){
+        } catch (UnknownHostException e) {
             e.printStackTrace();
 
-        }catch (SocketException e){
+        } catch (SocketException e) {
             e.printStackTrace();
 
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
 
         }
