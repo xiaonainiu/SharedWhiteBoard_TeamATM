@@ -11,9 +11,10 @@ import java.util.*;
 import javax.swing.text.Document;
 
 import org.json.*;
-import sun.rmi.runtime.Log;
 
 import java.util.HashMap;
+
+import sun.rmi.runtime.Log;
 
 /**
  * Created by ES on 2017/9/14.
@@ -79,6 +80,8 @@ public class SWBClient_GUI extends JFrame {
     int isFill = 2;
     int tempx1, tempy1, tempx2, tempy2;
     int i = 2;
+    private DataInputStream dis;
+    private DataOutputStream dos;
 
 
     public SWBClient_GUI() {
@@ -433,6 +436,20 @@ public class SWBClient_GUI extends JFrame {
                     shapeList.remove(shape);
                 } else {
                     //shape = null;
+                }
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("type", "draw");
+                map.put("operation", "mousePressed");
+                map.put("startx", "" + startx);
+                map.put("starty", "" + starty);
+                map.put("ip", "1.1.1.1");
+                map.put("port", "1111");
+                JSONObject startPosition = new JSONObject(map);
+                String startPositionStr = startPosition.toString();
+                try {
+                    SWBClient.dos.writeUTF(startPositionStr);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
             }
         });
@@ -924,6 +941,11 @@ public class SWBClient_GUI extends JFrame {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+    }
+
+    public void drawing(int x, int y) {
+        g = board.getGraphics();
+        g.drawLine(x, y, 10, 20);
     }
 }
 

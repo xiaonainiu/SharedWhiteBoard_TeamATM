@@ -43,14 +43,15 @@ public class LoginWindow {
                     message.put("ip", textField_ip.getText());
                     message.put("port", textField_port.getText());
                     String messageStr = message.toString();
-                    System.out.println(messageStr);
+//                    System.out.println(messageStr);
                     try {
                         SWBClient.dos.writeUTF(messageStr);
+                        frame.dispose();
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }
 
-                    System.out.print(message);
+                    //System.out.print(message);
                 } else {
                     textField_port.setText("Wrong Format");
                     textField_ip.setText("Wrong Format");
@@ -81,6 +82,7 @@ public class LoginWindow {
 //                    System.out.println(messageStr);
                     try {
                         SWBClient.dos.writeUTF(messageStr);
+                        frame.dispose();
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }

@@ -24,6 +24,7 @@ public class SWBClient {
     private String port;
     private String manager;
     private String user;
+    static SWBClient_GUI gui;
 
     public static void main(String args[]) {
 
@@ -35,7 +36,6 @@ public class SWBClient {
 //        initialize GUI
         SWBClient client = new SWBClient();
         LoginWindow logWin = new LoginWindow();
-//        SWBClient_GUI gui1 = new SWBClient_GUI();
 //        SWBClient_GUI gui1 = new SWBClient_GUI();
 //        gui1.start();
 //        SWBClient_GUI gui1 = new SWBClient_GUI();
@@ -118,8 +118,7 @@ public class SWBClient {
                                 client.manager = message.getString("manager");
                                 client.user = message.getString("manager");
                                 System.out.println("**going to start**");
-                                SWBClient_GUI gui = new SWBClient_GUI();
-//                                logWin.
+                                gui = new SWBClient_GUI();
                                 System.out.println("**already start**");
                                 //open GUI
                             } else if (result.equals("false")) {
@@ -147,7 +146,9 @@ public class SWBClient {
                             map.put("targetUser", user);
                             JSONObject replay_message = new JSONObject(map);
                             String replay_messageStr = replay_message.toString();
-                            dos.writeUTF(replay_messageStr);
+                            client.dos.writeUTF(replay_messageStr);
+                            System.out.println(replay_messageStr);
+                            break;
                         case "joinFeedback":
                             System.out.println("**case: joinFeedback**");
                             result = message.getString("result");
@@ -156,7 +157,7 @@ public class SWBClient {
                                 client.port = message.getString("port");
                                 client.manager = message.getString("manager");
                                 client.user = message.getString("targetUser");
-                                SWBClient_GUI gui = new SWBClient_GUI();
+                                gui = new SWBClient_GUI();
                                 //open GUI
                             } else if (result.equals("false")) {
                                 //alert : create fail
@@ -166,6 +167,11 @@ public class SWBClient {
                             break;
                         case "draw":
                             //draw picture with "draw"
+                            int x, y;
+                            JSONObject receivedOpe = new JSONObject(socket_inputStr);
+                            x = Integer.parseInt(receivedOpe.getString("startx"));
+                            y = Integer.parseInt(receivedOpe.getString("starty"));
+                            gui.drawing(x, y);
                             break;
                         case "kick":
                             //close GUI
