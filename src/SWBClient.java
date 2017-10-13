@@ -1,5 +1,6 @@
 import org.json.JSONObject;
 
+import javax.swing.*;
 import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -33,7 +34,10 @@ public class SWBClient {
          */
 //        initialize GUI
         SWBClient client = new SWBClient();
-//        SWBClient_GUI gui = new SWBClient_GUI();
+        LoginWindow logWin = new LoginWindow();
+//        SWBClient_GUI gui1 = new SWBClient_GUI();
+//        gui1.start();
+//        SWBClient_GUI gui1 = new SWBClient_GUI();
 
 //        demo of json
 
@@ -65,68 +69,26 @@ public class SWBClient {
                  * input
                  * start
                  */
-                    System.out.println("please input:");
-                if ((inputStr = keyboard.nextLine()) != null){
-                    System.out.println("**3**");
-                    if (inputStr == "exit"){
-                        flag = false;
-                    }
-//                    String[] inputStrSplit = inputStr.split(" ");
-                    try{
-//                        System.out.println(inputStrSplit);
-//                        String type = inputStrSplit[0];
-//                        HashMap<String,String> map = new HashMap<String,String>();
-//                        switch (type){
-//                            case "create":
-//                                map.put("type",type);
-//                                map.put("ip",inputStrSplit[1]);
-//                                map.put("port",inputStrSplit[2]);
-//                                map.put("manager",inputStrSplit[3]);
-//                                break;
-////                                return inputStrSplit.length==4;
-//                            case "join":
-//                                map.put("type",type);
-//                                map.put("ip",inputStrSplit[1]);
-//                                map.put("port",inputStrSplit[2]);
-//                                map.put("player",inputStrSplit[3]);
-//                                break;
-////                                return inputStrSplit.length==4;
-//                            case "draw":
-//                                map.put("type",type);
-//                                map.put("pic",inputStrSplit[1]);
-//                                break;
-////                                return inputStrSplit.length==2;
-//                            case "kick":
-//                                map.put("type",type);
-//                                map.put("player",inputStrSplit[1]);
-//                                break;
-////                                return inputStrSplit.length==2;
-//                            default:
-//                                System.out.println("Invalid input");
-////                                return false;
-//                        }
-//                        JSONObject massage = new JSONObject(map);
-//                        String massageStr = massage.toString();
-//                        System.out.println("please input message:");
-//                        String massageStr = keyboard.nextLine();
-                        System.out.println(inputStr);
-                        client.dos.writeUTF(inputStr);
-                    }catch (IndexOutOfBoundsException e){
-                        System.out.println("Invalid input");
-                    }
-//                    if (checkValid(inputStrSplit)){
-
-
-
+//                    System.out.println("please input:");
+//                if ((inputStr = keyboard.nextLine()) != null){
+//                    System.out.println("**3**");
+//                    if (inputStr == "exit"){
+//                        flag = false;
 //                    }
-                }
+//                    try{
+//                        System.out.println(inputStr);
+//                        client.dos.writeUTF(inputStr);
+//                    }catch (IndexOutOfBoundsException e){
+//                        System.out.println("Invalid input");
+//                    }
+//                }
 
                 /**
                  * by ES
                  * input
                  * end
                  */
-
+                System.out.println("paoguole");
                 if ((socket_inputStr = client.dis.readUTF()) != null){
                     System.out.println("From IP: "+client.socket.getInetAddress()+","+client.socket.getPort()+": "+socket_inputStr);
                     //get the command and make operation
@@ -154,7 +116,10 @@ public class SWBClient {
                                 client.port = port;
                                 client.manager = message.getString("manager");
                                 client.user = message.getString("manager");
-                                SWBClient_GUI.main(args);
+                                System.out.println("**going to start**");
+                                SWBClient_GUI gui = new SWBClient_GUI();
+//                                logWin.
+                                System.out.println("**already start**");
                                 //open GUI
                             }else if (result.equals("false")){
                                 //alert : create fail
@@ -164,14 +129,24 @@ public class SWBClient {
                             break;
                         case "join":
                             user = message.getString("user");
-                            System.out.println(user+" want to join in the game(true/false):");
-                            result = keyboard.nextLine();
+                            int value = JOptionPane.showConfirmDialog(null, user+" wants to join the game", "Confirm", 0);
+                            if (value == 0) {
+                                map.put("result","true");
+                            }
+                            if (value == 1) {
+                                map.put("result","false");
+                            }
+//                            System.out.println(user+" want to join in the game(true/false):");
+//                            result = keyboard.nextLine();
+
                             map.put("type","joinFeedback");
-                            map.put("result",result);
                             map.put("ip",ip);
                             map.put("port",port);
                             map.put("manager",client.manager);
                             map.put("targetUser",user);
+                            JSONObject replay_message = new JSONObject(map);
+                            String replay_messageStr = replay_message.toString();
+                            dos.writeUTF(replay_messageStr);
                         case "joinFeedback":
                             System.out.println("**case: joinFeedback**");
                             result = message.getString("result");
@@ -180,7 +155,7 @@ public class SWBClient {
                                 client.port = message.getString("port");
                                 client.manager = message.getString("manager");
                                 client.user = message.getString("targetUser");
-                                SWBClient_GUI.main(args);
+                                SWBClient_GUI gui = new SWBClient_GUI();
                                 //open GUI
                             }else if (result.equals("false")){
                                 //alert : create fail

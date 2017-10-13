@@ -82,6 +82,14 @@ public class SWBClient_GUI extends JFrame {
 
 
     public SWBClient_GUI() {
+
+        JFrame frame = new JFrame("SWBClient_GUI");
+        frame.setContentPane(this.mainWindow);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setResizable(false); // edit by LZH
+        frame.setVisible(true);
+
 //        set color
         cl000.addMouseListener(new MouseAdapter() {
             @Override
@@ -323,6 +331,7 @@ public class SWBClient_GUI extends JFrame {
                             docs.insertString(docs.getLength(), logname.loginName.trim() + ":", attrset_selfusername);
                             docs.insertString(docs.getLength(), "  ", null);
                             docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", attrset);
+                            System.out.println(textArea1.getText());
                             HashMap<String, String> map = new HashMap<String, String>();
                             map.put("State", "ChatWindow");
                             map.put("UserName", logname.loginName.trim());
@@ -890,14 +899,14 @@ public class SWBClient_GUI extends JFrame {
         g2d.drawImage(image, board.getLocation().x - 1, board.getLocation().y - 115, board.getWidth(), board.getHeight(), null);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("SWBClient_GUI");
-        frame.setContentPane(new SWBClient_GUI().mainWindow);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setResizable(false); // edit by LZH
-        frame.setVisible(true);
-    }
+//    public static void start() {
+//        JFrame frame = new JFrame("SWBClient_GUI");
+//        frame.setContentPane(new SWBClient_GUI().mainWindow);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setResizable(false); // edit by LZH
+//        frame.setVisible(true);
+//    }
 
     public void saveFile() {
         JFileChooser chooser = new JFileChooser();

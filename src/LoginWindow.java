@@ -7,22 +7,15 @@ import org.json.*;
 //import ShareWhiteBoard_TeamATM.src.*;
 
 public class LoginWindow {
-    private JTextField textField1;
-    private JButton button1;
-    private JLabel label1;
-    private JPanel mainWindow;
-    private JTextField textField_ip;
-    private JTextField textField_port;
-    private JLabel IP; //edit by lzh
-    private JLabel Port; //edit by lzh
 
-    private JButton button2;
-    static boolean flag = false;
-    static JFrame frame;
-    static String loginName;
-    String ip_regex ="((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
-    String number = "^-?[0-9]+$";
     public LoginWindow() {
+
+        frame = new JFrame("LoginWindow");
+        frame.setContentPane(this.mainWindow);
+        //frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setResizable(false);
+        frame.setVisible(true);
 
         button1.setText("Join");
         button2.setText("Creat");
@@ -85,11 +78,11 @@ public class LoginWindow {
 //                    System.out.println(message);
                     String messageStr = message.toString();
                     System.out.println(messageStr);
-//                    try {
-//                        SWBClient.dos.writeUTF(messageStr);
-//                    }catch (IOException exception){
-//                        exception.printStackTrace();
-//                    }
+                    try {
+                        SWBClient.dos.writeUTF(messageStr);
+                    }catch (IOException exception){
+                        exception.printStackTrace();
+                    }
                 }
                 else{
                     textField_port.setText("Wrong Format");
@@ -112,14 +105,31 @@ public class LoginWindow {
 //        });
     }
 
-    public static void main(String[] args) {
-        frame = new JFrame("LoginWindow");
-        frame.setContentPane(new LoginWindow().mainWindow);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
+//    public static void start() {
+//        frame = new JFrame("LoginWindow");
+//        frame.setContentPane(new LoginWindow().mainWindow);
+//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        frame.pack();
+//        frame.setResizable(false);
+//        frame.setVisible(true);
+//
+//    }
+//    public void close(){
+//
+//    }
 
-    }
-
+    private JTextField textField1;
+    private JButton button1;
+    private JLabel label1;
+    private JPanel mainWindow;
+    private JTextField textField_ip;
+    private JTextField textField_port;
+    private JLabel IP; //edit by lzh
+    private JLabel Port; //edit by lzh
+    private JButton button2;
+    static boolean flag = false;
+    static JFrame frame;
+    static String loginName;
+    String ip_regex ="((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
+    String number = "^-?[0-9]+$";
 }
