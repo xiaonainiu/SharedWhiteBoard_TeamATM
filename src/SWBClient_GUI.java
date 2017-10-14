@@ -381,7 +381,7 @@ public class SWBClient_GUI extends JFrame {
                         docs.insertString(docs.getLength(), textArea1.getText().trim() + "\n", setWord);
                         HashMap<String, String> map = new HashMap<String, String>();
                         map.put("type", "chatWindow");
-                        map.put("userName", LoginWindow.loginName.trim());
+                        map.put("user", LoginWindow.loginName.trim());
                         map.put("content", textArea1.getText());
                         map.put("ip", "1.1.1.1");
                         map.put("port", "1111");

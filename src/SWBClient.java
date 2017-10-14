@@ -197,7 +197,7 @@ public class SWBClient {
                             Document docs = gui.textPane1.getDocument();
                             try {
                                 docs.insertString(docs.getLength(), date.toString() + "\n", attrset_time);
-                                docs.insertString(docs.getLength(), message.getString("userName").trim() + ":", attrset_selfusername);
+                                docs.insertString(docs.getLength(), message.getString("user").trim() + ":", attrset_selfusername);
                                 docs.insertString(docs.getLength(), "  ", null);
                                 docs.insertString(docs.getLength(), message.getString("content").trim() + "\n", attrset_receiver);
                             } catch (Exception e) {
