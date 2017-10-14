@@ -79,7 +79,7 @@ public class SWBServer {
                         String[] info = new String[2];//store ip and port of this game
                         String[] userList;//user list of this game
                         int userNumber;//user number in this game
-                        String pic;//picture of this game
+                        List<String> picture;//picture of this game
 
                         System.out.println("From IP: " + socket.getInetAddress() + "," + socket.getPort() + ": " + inputStr);
 
@@ -169,7 +169,7 @@ public class SWBServer {
                                             socketList.get(targetUser).close();
                                             socketList.remove(targetUser);
                                         } else {
-                                            pic = gameList.get(gameIndex).picture;
+                                            picture = gameList.get(gameIndex).getPicture();
                                             manager = gameList.get(gameIndex).getManager();
                                             result = "true";
                                             map.put("type", "joinFeedback");
@@ -178,11 +178,15 @@ public class SWBServer {
                                             map.put("port", port);
                                             map.put("targetUser", targetUser);
                                             map.put("manager", manager);
-                                            map.put("pic", pic);
+//                                            map.put("pic", pic);
                                             map.put("userNumber", String.valueOf(userNumber));
                                             reply_message = new JSONObject(map);
                                             reply_messageStr = reply_message.toString();
                                             joinStream.writeUTF(reply_messageStr);
+                                            for (int i=0;i<picture.size();i++){
+                                                reply_messageStr = picture.get(i);
+                                                joinStream.writeUTF(reply_messageStr);
+                                            }
 //                                        **for send to all user**
 //                                        userList= gameList.get(gameIndex).getUser();
 //                                        for (int j = 0; j < 4; j++){
@@ -214,7 +218,7 @@ public class SWBServer {
                                     //pic = message.getString("pic");
                                     System.out.println(gameIndex);
                                     if (gameIndex != -1) {
-                                        //gameList.get(gameIndex).picture = pic;
+                                        gameList.get(gameIndex).updatePicture(inputStr);
                                         userList = gameList.get(gameIndex).getUser();
                                         for (int j = 0; j < 4; j++) {
                                             if (userList[j] != null /*&& !userList[j].equals(draw_user)*/) {

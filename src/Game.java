@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * Created by es on 9/22/17.
  */
@@ -14,7 +16,7 @@ public class Game {
     String player3;
     String player3ip;
     String player3port;
-    String picture;
+    List<String> picture=new ArrayList<>();
 
     public Game(String manager, String ip, String port) {
         this.manager = manager;
@@ -22,16 +24,12 @@ public class Game {
         this.port = port;
     }
 
-    public void newPicture() {
-        picture = "";
+    public void updatePicture(String inputStr){
+        picture.add(inputStr);
     }
 
-    public void openPicture(String str) {
-        picture = str;
-    }
-
-    public void savePicture() {
-
+    public List getPicture(){
+        return picture;
     }
 
     public String[] getGameInfo() {
