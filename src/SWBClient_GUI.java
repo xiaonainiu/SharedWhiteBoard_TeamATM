@@ -67,6 +67,22 @@ public class SWBClient_GUI extends JFrame {
     private JButton bt_exit;
     private JTextArea textArea2;
     private JButton bt_undo;
+    private JTextField textField1; //used for kick out
+    private JTextField textField2; // used for kick out
+    private JTextField textField3; // used for kick out
+    private JTextField textField4; // used for kick out
+    private JButton kick1;
+    private JButton kick2;
+    private JButton kick3;
+    private JLabel manager; //used for kick out
+    private JLabel player1; //used for kick out
+    private JLabel player2; //used for kick out
+    private JLabel player3; //used for kick out
+    private int numberOfCurrentPlayer = 0; // used for kick out
+    private int stateOfManager = 0;// used for kick out
+    private int stateOfPlayer1 = 0;// used for kick out
+    private int stateOfPlayer2 = 0;// used for kick out
+    private int stateOfPlayer3 = 0;// used for kick out
     private int startx;
     private int starty;
     private int x;
@@ -100,7 +116,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(0, 0, 0);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -111,7 +127,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(255, 255, 255);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -122,7 +138,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(102, 102, 102);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -133,7 +149,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(204, 204, 204);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -144,7 +160,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(255, 0, 0);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_red.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_red.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -155,7 +171,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(255, 128, 0);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -166,7 +182,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(255, 255, 0);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_other.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -177,7 +193,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(128, 255, 0);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -188,7 +204,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(0, 255, 0);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -199,7 +215,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(0, 255, 128);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_green.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -210,7 +226,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(0, 255, 255);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -221,7 +237,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(0, 128, 255);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -232,7 +248,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(0, 0, 255);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_blue.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -243,7 +259,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(128, 0, 255);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_purple.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_purple.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -254,7 +270,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(255, 0, 255);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_pink.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_pink.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -265,7 +281,7 @@ public class SWBClient_GUI extends JFrame {
                 super.mouseClicked(e);
                 color = new Color(255, 0, 128);
                 if (state == "pencil") {
-                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_pink.png").getImage(), new Point(2, 28), "eraser");
+                    java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit_pink.png").getImage(), new Point(2, 28), "pencil");
                     board.setCursor(cursor);
                 }
             }
@@ -411,6 +427,161 @@ public class SWBClient_GUI extends JFrame {
          * Chat Window
          * */
 
+        /**
+         * This part is written by LZH
+         * kick out
+         * */
+        /*
+        WARNING!
+        variable: receivedMesg should be message received from server, need be edited
+         */
+        JSONObject receivedMesg = new JSONObject();
+        /*
+        WARNING!
+        variable: receivedMesg should be message received from server, need be edited
+         */
+        manager.setText("Manager");
+        player1.setText("Player_1");
+        player2.setText("Player_2");
+        player3.setText("Player_3");
+        kick1.setText("Kick");
+        kick2.setText("Kick");
+        kick3.setText("Kick");
+        textField1.setEditable(false);
+        textField2.setEditable(false);
+        textField3.setEditable(false);
+        textField4.setEditable(false);
+
+        /*
+        WARNING!
+        This two is used to test, should be deleted
+         */
+        receivedMesg.put("type", "create");
+        receivedMesg.put("username", "Andrew");
+        /*
+        WARNING1
+        This two is used to test, should be deleted
+         */
+
+        if (receivedMesg.getString("type").toString().equalsIgnoreCase("create")) {
+            if (numberOfCurrentPlayer == 0 && stateOfManager == 0) {
+                textField1.setText(receivedMesg.getString("username").toString());
+                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
+                stateOfManager = stateOfManager + 1;
+            } else {
+                System.out.println("ERROR: MANAGER ALREADY EXISTED");
+            }
+        }
+        if (receivedMesg.getString("type").toString().equalsIgnoreCase("join")) {
+            if (stateOfPlayer1 == 0) {
+                textField2.setText(receivedMesg.getString("username").toString());
+                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
+                stateOfPlayer1 = stateOfPlayer1 + 1;
+            } else if (stateOfPlayer1 != 0 && stateOfPlayer2 == 0) {
+                textField3.setText(receivedMesg.getString("username").toString());
+                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
+                stateOfPlayer2 = stateOfPlayer2 + 1;
+            } else if (stateOfPlayer2 != 0 && stateOfPlayer3 == 0) {
+                textField4.setText(receivedMesg.getString("username").toString());
+                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
+                stateOfPlayer3 = stateOfPlayer3 + 1;
+            } else {
+                System.out.println("ERROR: PLAYER FULL");
+            }
+        }
+        kick1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (!textField2.getText().toString().equalsIgnoreCase("Waiting for joining")) {
+                    stateOfPlayer1 = 0;
+                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
+                    JSONObject kickplayer1 = new JSONObject();
+                    kickplayer1.put("type", "kick");
+                    kickplayer1.put("username", textField2.getText().toString());
+                    kickplayer1.put("ip", LoginWindow.loginIp);
+                    kickplayer1.put("port", LoginWindow.loginPort);
+                    String kick1_str = kickplayer1.toString();
+                    try {
+                        SWBClient.dos.writeUTF(kick1_str);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    System.out.println("NO PLAYER ERROR");
+                }
+            }
+        });
+        kick2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (!textField3.getText().toString().equalsIgnoreCase("Waiting for join")) {
+                    stateOfPlayer2 = 0;
+                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
+                    JSONObject kickplayer2 = new JSONObject();
+                    kickplayer2.put("type", "kick");
+                    kickplayer2.put("username", textField3.getText().toString());
+                    kickplayer2.put("ip", LoginWindow.loginIp);
+                    kickplayer2.put("port", LoginWindow.loginPort);
+                    String kick2_str = kickplayer2.toString();
+                    try {
+                        SWBClient.dos.writeUTF(kick2_str);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    System.out.println("NO PLAYER ERROR");
+                }
+            }
+        });
+        kick3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (!textField4.getText().toString().equalsIgnoreCase("Waiting for join")) {
+                    stateOfPlayer3 = 0;
+                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
+                    JSONObject kickplayer3 = new JSONObject();
+                    kickplayer3.put("type", "kick");
+                    kickplayer3.put("username", textField4.getText().toString());
+                    kickplayer3.put("ip", LoginWindow.loginIp);
+                    kickplayer3.put("port", LoginWindow.loginPort);
+                    String kick3_str = kickplayer3.toString();
+                    try {
+                        SWBClient.dos.writeUTF(kick3_str);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    System.out.println("NO PLAYER ERROR");
+                }
+            }
+        });
+
+        /*
+        This part used to update the name of exited player
+        The position can not be changed!!!
+         */
+        if (stateOfPlayer1 == 0) {
+            textField2.setText("Waiting for join");
+        }
+        if (stateOfPlayer2 == 0) {
+            textField3.setText("Waiting for join");
+        }
+        if (stateOfPlayer3 == 0) {
+            textField4.setText("Waiting for join");
+        }
+        /*
+        This part used to update the name of exited player
+        The position can not be changed!!!
+         */
+
+        /**
+         * This part is written by LZH
+         * kick out
+         * */
+
 
 //        click color bt
         bt_color.addMouseListener(new MouseAdapter() {
@@ -465,641 +636,645 @@ public class SWBClient_GUI extends JFrame {
         board.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                super.mouseDragged(e);
-                if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "rectangle") {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin")
-                        shape = new Rectangle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
-                    else if (cb_shape.getSelectedItem() == "normal")
-                        shape = new Rectangle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
-                    else
-                        shape = new Rectangle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "line") {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin")
-                        shape = new Line(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1);
-                    else if (cb_shape.getSelectedItem() == "normal")
-                        shape = new Line(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2);
-                    else
-                        shape = new Line(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5);
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "circle") {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin")
-                        shape = new Circle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
-                    else if (cb_shape.getSelectedItem() == "normal")
-                        shape = new Circle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
-                    else
-                        shape = new Circle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "oval") {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin")
-                        shape = new Oval(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
-                    else if (cb_shape.getSelectedItem() == "normal")
-                        shape = new Oval(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
-                    else
-                        shape = new Oval(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "polygon") {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin")
-                        shape = new Polygon(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
-                    else if (cb_shape.getSelectedItem() == "normal")
-                        shape = new Polygon(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
-                    else
-                        shape = new Polygon(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "square") {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin")
-                        shape = new Square(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
-                    else if (cb_shape.getSelectedItem() == "normal")
-                        shape = new Square(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
-                    else
-                        shape = new Square(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                }
-                if (state == "line" && i == 2) {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin") {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 1);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "line");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 1);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else if (cb_shape.getSelectedItem() == "normal") {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 2);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "line");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 2);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 5);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "line");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 5);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                try {
+                    super.mouseDragged(e);
+                    if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "rectangle") {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin")
+                            shape = new Rectangle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
+                        else if (cb_shape.getSelectedItem() == "normal")
+                            shape = new Rectangle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
+                        else
+                            shape = new Rectangle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "line") {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin")
+                            shape = new Line(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1);
+                        else if (cb_shape.getSelectedItem() == "normal")
+                            shape = new Line(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2);
+                        else
+                            shape = new Line(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5);
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "circle") {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin")
+                            shape = new Circle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
+                        else if (cb_shape.getSelectedItem() == "normal")
+                            shape = new Circle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
+                        else
+                            shape = new Circle(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "oval") {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin")
+                            shape = new Oval(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
+                        else if (cb_shape.getSelectedItem() == "normal")
+                            shape = new Oval(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
+                        else
+                            shape = new Oval(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "polygon") {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin")
+                            shape = new Polygon(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
+                        else if (cb_shape.getSelectedItem() == "normal")
+                            shape = new Polygon(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
+                        else
+                            shape = new Polygon(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (shape != null && shape.contains(e.getX(), e.getY()) && i == 1 && state == "square") {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin")
+                            shape = new Square(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 1, isFill);
+                        else if (cb_shape.getSelectedItem() == "normal")
+                            shape = new Square(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 2, isFill);
+                        else
+                            shape = new Square(tempx1 - (startx - x), tempy1 - (starty - y), tempx2 - (startx - x), tempy2 - (starty - y), g.getColor(), 5, isFill);
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
                     }
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (state == "pencil") {
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_pencil.getSelectedItem() == "thin") {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 1);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "pencil");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 1);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
+                    if (state == "line" && i == 2) {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin") {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 1);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "line");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 1);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else if (cb_shape.getSelectedItem() == "normal") {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 2);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "line");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 2);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 5);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "line");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 5);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
                         }
-                    } else if (cb_pencil.getSelectedItem() == "normal") {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 2);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "pencil");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 2);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (state == "pencil") {
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_pencil.getSelectedItem() == "thin") {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 1);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "pencil");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 1);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else if (cb_pencil.getSelectedItem() == "normal") {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 2);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "pencil");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 2);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 5);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "pencil");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 5);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
                         }
-                    } else {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 5);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "pencil");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 5);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
+                        if (shape != null) shapeList.add(shape);
+                        shape = null;
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                        startx = e.getX();
+                        starty = e.getY();
+                    } else if (state == "eraser") {
+                        g = board.getGraphics();
+                        g.setColor(eraser_color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_eraser.getSelectedItem() == "small") {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 1);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "eraser");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 1);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else if (cb_eraser.getSelectedItem() == "medium") {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 5);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "eraser");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 5);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            shape = new Line(startx, starty, x, y, g.getColor(), 10);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "eraser");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 10);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
                         }
+                        if (shape != null) shapeList.add(shape);
+                        shape = null;
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                        startx = e.getX();
+                        starty = e.getY();
+                    } else if (state == "rectangle" && i == 2) {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin") {
+                            shape = new Rectangle(startx, starty, x, y, g.getColor(), 1, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "rectangle");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 1);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else if (cb_shape.getSelectedItem() == "normal") {
+                            shape = new Rectangle(startx, starty, x, y, g.getColor(), 2, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "rectangle");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 2);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            shape = new Rectangle(startx, starty, x, y, g.getColor(), 5, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "rectangle");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 5);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (state == "circle" && i == 2) {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin") {
+                            shape = new Circle(startx, starty, x, y, g.getColor(), 1, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "circle");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 1);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else if (cb_shape.getSelectedItem() == "normal") {
+                            shape = new Circle(startx, starty, x, y, g.getColor(), 2, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "circle");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 2);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            shape = new Circle(startx, starty, x, y, g.getColor(), 5, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "circle");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 5);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (state == "oval" && i == 2) {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin") {
+                            shape = new Oval(startx, starty, x, y, g.getColor(), 1, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "oval");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 1);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else if (cb_shape.getSelectedItem() == "normal") {
+                            shape = new Oval(startx, starty, x, y, g.getColor(), 2, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "oval");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 2);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            shape = new Oval(startx, starty, x, y, g.getColor(), 5, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "oval");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 5);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (state == "polygon" && i == 2) {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin") {
+                            shape = new Polygon(startx, starty, x, y, g.getColor(), 1, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "polygon");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 1);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else if (cb_shape.getSelectedItem() == "normal") {
+                            shape = new Polygon(startx, starty, x, y, g.getColor(), 2, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "polygon");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 2);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            shape = new Polygon(startx, starty, x, y, g.getColor(), 5, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "polygon");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 5);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
+                    } else if (state == "square" && i == 2) {
+                        board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                        g = board.getGraphics();
+                        g.setColor(color);
+                        x = e.getX();
+                        y = e.getY();
+                        if (cb_shape.getSelectedItem() == "thin") {
+                            shape = new Square(startx, starty, x, y, g.getColor(), 1, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "square");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 1);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else if (cb_shape.getSelectedItem() == "normal") {
+                            shape = new Square(startx, starty, x, y, g.getColor(), 2, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "square");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 2);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else {
+                            shape = new Square(startx, starty, x, y, g.getColor(), 5, isFill);
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("type", "draw");
+                            map.put("state", "square");
+                            map.put("operation", "mouseDragged");
+                            map.put("x", "" + x);
+                            map.put("y", "" + y);
+                            map.put("size", "" + 5);
+                            map.put("isfill", "" + isFill);
+                            map.put("color", ColorConverter.Color2String(g.getColor()));
+                            map.put("ip", LoginWindow.loginIp);
+                            map.put("port", LoginWindow.loginPort);
+                            JSONObject startPosition = new JSONObject(map);
+                            String startPositionStr = startPosition.toString();
+                            try {
+                                SWBClient.dos.writeUTF(startPositionStr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        repaint();
+                        text_info.setText("Position: (" + x + "," + y + ")");
                     }
-                    if (shape != null) shapeList.add(shape);
-                    shape = null;
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                    startx = e.getX();
-                    starty = e.getY();
-                } else if (state == "eraser") {
-                    g = board.getGraphics();
-                    g.setColor(eraser_color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_eraser.getSelectedItem() == "small") {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 1);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "eraser");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 1);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else if (cb_eraser.getSelectedItem() == "medium") {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 5);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "eraser");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 5);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        shape = new Line(startx, starty, x, y, g.getColor(), 10);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "eraser");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 10);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    if (shape != null) shapeList.add(shape);
-                    shape = null;
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                    startx = e.getX();
-                    starty = e.getY();
-                } else if (state == "rectangle" && i == 2) {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin") {
-                        shape = new Rectangle(startx, starty, x, y, g.getColor(), 1, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "rectangle");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 1);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else if (cb_shape.getSelectedItem() == "normal") {
-                        shape = new Rectangle(startx, starty, x, y, g.getColor(), 2, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "rectangle");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 2);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        shape = new Rectangle(startx, starty, x, y, g.getColor(), 5, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "rectangle");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 5);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (state == "circle" && i == 2) {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin") {
-                        shape = new Circle(startx, starty, x, y, g.getColor(), 1, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "circle");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 1);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else if (cb_shape.getSelectedItem() == "normal") {
-                        shape = new Circle(startx, starty, x, y, g.getColor(), 2, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "circle");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 2);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        shape = new Circle(startx, starty, x, y, g.getColor(), 5, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "circle");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 5);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (state == "oval" && i == 2) {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin") {
-                        shape = new Oval(startx, starty, x, y, g.getColor(), 1, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "oval");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 1);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else if (cb_shape.getSelectedItem() == "normal") {
-                        shape = new Oval(startx, starty, x, y, g.getColor(), 2, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "oval");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 2);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        shape = new Oval(startx, starty, x, y, g.getColor(), 5, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "oval");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 5);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (state == "polygon" && i == 2) {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin") {
-                        shape = new Polygon(startx, starty, x, y, g.getColor(), 1, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "polygon");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 1);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else if (cb_shape.getSelectedItem() == "normal") {
-                        shape = new Polygon(startx, starty, x, y, g.getColor(), 2, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "polygon");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 2);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        shape = new Polygon(startx, starty, x, y, g.getColor(), 5, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "polygon");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 5);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
-                } else if (state == "square" && i == 2) {
-                    board.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-                    g = board.getGraphics();
-                    g.setColor(color);
-                    x = e.getX();
-                    y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin") {
-                        shape = new Square(startx, starty, x, y, g.getColor(), 1, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "square");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 1);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else if (cb_shape.getSelectedItem() == "normal") {
-                        shape = new Square(startx, starty, x, y, g.getColor(), 2, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "square");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 2);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        shape = new Square(startx, starty, x, y, g.getColor(), 5, isFill);
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("type", "draw");
-                        map.put("state", "square");
-                        map.put("operation", "mouseDragged");
-                        map.put("x", "" + x);
-                        map.put("y", "" + y);
-                        map.put("size", "" + 5);
-                        map.put("isfill", "" + isFill);
-                        map.put("color", g.getColor().toString());
-                        map.put("ip", LoginWindow.loginIp);
-                        map.put("port", LoginWindow.loginPort);
-                        JSONObject startPosition = new JSONObject(map);
-                        String startPositionStr = startPosition.toString();
-                        try {
-                            SWBClient.dos.writeUTF(startPositionStr);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    repaint();
-                    text_info.setText("Position: (" + x + "," + y + ")");
+                } catch (Exception e1) {
+
                 }
             }
         });
@@ -1109,7 +1284,7 @@ public class SWBClient_GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 state = "pencil";
-                java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "eraser");
+                java.awt.Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("ym/edit.png").getImage(), new Point(2, 28), "pencil");
                 board.setCursor(cursor);
             }
         });
@@ -1125,19 +1300,20 @@ public class SWBClient_GUI extends JFrame {
         board.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-                g = board.getGraphics();
-                if (shape != null) shapeList.add(shape);
-                //shape = null;
-                repaint();
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("type", "draw");
-                map.put("operation", "mouseReleased");
-                map.put("ip", LoginWindow.loginIp);
-                map.put("port", LoginWindow.loginPort);
-                JSONObject startPosition = new JSONObject(map);
-                String startPositionStr = startPosition.toString();
                 try {
+                    super.mouseReleased(e);
+                    g = board.getGraphics();
+                    if (shape != null) shapeList.add(shape);
+                    //shape = null;
+                    repaint();
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    map.put("type", "draw");
+                    map.put("operation", "mouseReleased");
+                    map.put("ip", LoginWindow.loginIp);
+                    map.put("port", LoginWindow.loginPort);
+                    JSONObject startPosition = new JSONObject(map);
+                    String startPositionStr = startPosition.toString();
+
                     SWBClient.dos.writeUTF(startPositionStr);
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -1188,12 +1364,67 @@ public class SWBClient_GUI extends JFrame {
                     g.setColor(color);
                     x = e.getX();
                     y = e.getY();
-                    if (cb_shape.getSelectedItem() == "thin")
+                    if (cb_shape.getSelectedItem() == "thin") {
                         shape = new Text(startx, starty, g.getColor(), 1, textArea2.getText());
-                    else if (cb_shape.getSelectedItem() == "normal")
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("type", "draw");
+                        map.put("state", "text");
+                        map.put("operation", "mouseClicked");
+                        map.put("x", "" + x);
+                        map.put("y", "" + y);
+                        map.put("size", "" + 1);
+                        map.put("content", textArea2.getText());
+                        map.put("color", ColorConverter.Color2String(g.getColor()));
+                        map.put("ip", LoginWindow.loginIp);
+                        map.put("port", LoginWindow.loginPort);
+                        JSONObject startPosition = new JSONObject(map);
+                        String startPositionStr = startPosition.toString();
+                        try {
+                            SWBClient.dos.writeUTF(startPositionStr);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    } else if (cb_shape.getSelectedItem() == "normal") {
                         shape = new Text(startx, starty, g.getColor(), 2, textArea2.getText());
-                    else
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("type", "draw");
+                        map.put("state", "text");
+                        map.put("operation", "mouseClicked");
+                        map.put("x", "" + x);
+                        map.put("y", "" + y);
+                        map.put("size", "" + 2);
+                        map.put("content", textArea2.getText());
+                        map.put("color", ColorConverter.Color2String(g.getColor()));
+                        map.put("ip", LoginWindow.loginIp);
+                        map.put("port", LoginWindow.loginPort);
+                        JSONObject startPosition = new JSONObject(map);
+                        String startPositionStr = startPosition.toString();
+                        try {
+                            SWBClient.dos.writeUTF(startPositionStr);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    } else {
                         shape = new Text(startx, starty, g.getColor(), 5, textArea2.getText());
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("type", "draw");
+                        map.put("state", "text");
+                        map.put("operation", "mouseClicked");
+                        map.put("x", "" + x);
+                        map.put("y", "" + y);
+                        map.put("size", "" + 5);
+                        map.put("content", textArea2.getText());
+                        map.put("color", ColorConverter.Color2String(g.getColor()));
+                        map.put("ip", LoginWindow.loginIp);
+                        map.put("port", LoginWindow.loginPort);
+                        JSONObject startPosition = new JSONObject(map);
+                        String startPositionStr = startPosition.toString();
+                        try {
+                            SWBClient.dos.writeUTF(startPositionStr);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
                     repaint();
                     text_info.setText("Position: (" + x + "," + y + ")");
                 }
@@ -1338,7 +1569,7 @@ public class SWBClient_GUI extends JFrame {
         Graphics2D temp_g2d = (Graphics2D) temp_g;
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.white);
-        g2d.fillRect(board.getX() - 1, board.getY() - 115, board.getWidth(), board.getHeight());
+        g2d.fillRect(board.getX(), board.getY(), board.getWidth(), board.getHeight());
 //        for (Shape s : shapeList) s.draw(g2d);
 //        if (shape != null) {
 //            shape.draw(g2d);
@@ -1348,7 +1579,7 @@ public class SWBClient_GUI extends JFrame {
         if (shape != null) {
             shape.draw(temp_g2d);
         }
-        g2d.drawImage(image, board.getLocation().x - 1, board.getLocation().y - 115, board.getWidth(), board.getHeight(), null);
+        g2d.drawImage(image, board.getLocation().x, board.getLocation().y - 180, board.getWidth(), board.getHeight(), null);
     }
 
 //    public static void start() {
@@ -1397,14 +1628,21 @@ public class SWBClient_GUI extends JFrame {
 
     public void drawLine(int startx, int starty, int x, int y, Color color, int size) {
         g = board.getGraphics();
-        g.setColor(color);
+        //g.setColor(color);
         shape = new Line(startx, starty, x, y, color, size);
+        repaint();
+    }
+
+    public void drawText(int startx, int starty, Color color, int size, String str) {
+        g = board.getGraphics();
+        //g.setColor(color);
+        shape = new Text(startx, starty, color, size, str);
         repaint();
     }
 
     public void drawPencil(int startx, int starty, int x, int y, Color color, int size) {
         g = board.getGraphics();
-        g.setColor(color);
+        //g.setColor(color);
         shape = new Line(startx, starty, x, y, color, size);
         if (shape != null) shapeList.add(shape);
         shape = null;
@@ -1413,7 +1651,7 @@ public class SWBClient_GUI extends JFrame {
 
     public void drawEraser(int startx, int starty, int x, int y, Color color, int size) {
         g = board.getGraphics();
-        g.setColor(color);
+        //g.setColor(color);
         shape = new Line(startx, starty, x, y, color, size);
         if (shape != null) shapeList.add(shape);
         shape = null;
@@ -1422,35 +1660,35 @@ public class SWBClient_GUI extends JFrame {
 
     public void drawRect(int startx, int starty, int x, int y, Color color, int size, int isfill) {
         g = board.getGraphics();
-        g.setColor(color);
+        //g.setColor(color);
         shape = new Rectangle(startx, starty, x, y, color, size, isfill);
         repaint();
     }
 
     public void drawCircle(int startx, int starty, int x, int y, Color color, int size, int isfill) {
         g = board.getGraphics();
-        g.setColor(color);
+        //g.setColor(color);
         shape = new Circle(startx, starty, x, y, color, size, isfill);
         repaint();
     }
 
     public void drawOval(int startx, int starty, int x, int y, Color color, int size, int isfill) {
         g = board.getGraphics();
-        g.setColor(color);
+        //g.setColor(color);
         shape = new Oval(startx, starty, x, y, color, size, isfill);
         repaint();
     }
 
     public void drawPolygon(int startx, int starty, int x, int y, Color color, int size, int isfill) {
         g = board.getGraphics();
-        g.setColor(color);
+        //g.setColor(color);
         shape = new Polygon(startx, starty, x, y, color, size, isfill);
         repaint();
     }
 
     public void drawSquare(int startx, int starty, int x, int y, Color color, int size, int isfill) {
         g = board.getGraphics();
-        g.setColor(color);
+        //g.setColor(color);
         shape = new Square(startx, starty, x, y, color, size, isfill);
         repaint();
     }
@@ -1721,6 +1959,23 @@ class Square extends Shape {
             return true;
         else
             return false;
+    }
+}
+
+class ColorConverter {
+    public static Color String2Color(String str) {
+        int i = Integer.parseInt(str.substring(1), 16);
+        return new Color(i);
+    }
+
+    public static String Color2String(Color color) {
+        String R = Integer.toHexString(color.getRed());
+        R = R.length() < 2 ? ('0' + R) : R;
+        String B = Integer.toHexString(color.getBlue());
+        B = B.length() < 2 ? ('0' + B) : B;
+        String G = Integer.toHexString(color.getGreen());
+        G = G.length() < 2 ? ('0' + G) : G;
+        return '#' + R + G + B;
     }
 }
 

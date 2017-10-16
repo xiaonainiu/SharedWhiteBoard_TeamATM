@@ -133,8 +133,7 @@ public class SWBClient {
                             int value = JOptionPane.showConfirmDialog(null, user + " wants to join the game", "Confirm", 0);
                             if (value == 0) {
                                 map.put("result", "true");
-                            }
-                            if (value == 1) {
+                            } else {
                                 map.put("result", "false");
                             }
 //                            System.out.println(user+" want to join in the game(true/false):");
@@ -171,6 +170,7 @@ public class SWBClient {
                             try {
                                 int x, y, size, isfill;
                                 Color color;
+                                String str;
                                 JSONObject receivedOpe = new JSONObject(socket_inputStr);
                                 if (receivedOpe.getString("operation").equals("mousePressed")) {
                                     startx = Integer.parseInt(receivedOpe.getString("startx"));
@@ -179,14 +179,14 @@ public class SWBClient {
                                 if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("line")) {
                                     x = Integer.parseInt(receivedOpe.getString("x"));
                                     y = Integer.parseInt(receivedOpe.getString("y"));
-                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
                                     size = Integer.parseInt(receivedOpe.getString("size"));
                                     gui.drawLine(startx, starty, x, y, color, size);
                                 }
                                 if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("pencil")) {
                                     x = Integer.parseInt(receivedOpe.getString("x"));
                                     y = Integer.parseInt(receivedOpe.getString("y"));
-                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
                                     size = Integer.parseInt(receivedOpe.getString("size"));
                                     gui.drawPencil(startx, starty, x, y, color, size);
                                     startx = x;
@@ -195,7 +195,7 @@ public class SWBClient {
                                 if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("eraser")) {
                                     x = Integer.parseInt(receivedOpe.getString("x"));
                                     y = Integer.parseInt(receivedOpe.getString("y"));
-                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
                                     size = Integer.parseInt(receivedOpe.getString("size"));
                                     gui.drawEraser(startx, starty, x, y, color, size);
                                     startx = x;
@@ -207,7 +207,7 @@ public class SWBClient {
                                 if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("rectangle")) {
                                     x = Integer.parseInt(receivedOpe.getString("x"));
                                     y = Integer.parseInt(receivedOpe.getString("y"));
-                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
                                     size = Integer.parseInt(receivedOpe.getString("size"));
                                     isfill = Integer.parseInt(receivedOpe.getString("isfill"));
                                     gui.drawRect(startx, starty, x, y, color, size, isfill);
@@ -215,7 +215,7 @@ public class SWBClient {
                                 if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("circle")) {
                                     x = Integer.parseInt(receivedOpe.getString("x"));
                                     y = Integer.parseInt(receivedOpe.getString("y"));
-                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
                                     size = Integer.parseInt(receivedOpe.getString("size"));
                                     isfill = Integer.parseInt(receivedOpe.getString("isfill"));
                                     gui.drawCircle(startx, starty, x, y, color, size, isfill);
@@ -223,7 +223,7 @@ public class SWBClient {
                                 if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("oval")) {
                                     x = Integer.parseInt(receivedOpe.getString("x"));
                                     y = Integer.parseInt(receivedOpe.getString("y"));
-                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
                                     size = Integer.parseInt(receivedOpe.getString("size"));
                                     isfill = Integer.parseInt(receivedOpe.getString("isfill"));
                                     gui.drawOval(startx, starty, x, y, color, size, isfill);
@@ -231,7 +231,7 @@ public class SWBClient {
                                 if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("polygon")) {
                                     x = Integer.parseInt(receivedOpe.getString("x"));
                                     y = Integer.parseInt(receivedOpe.getString("y"));
-                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
                                     size = Integer.parseInt(receivedOpe.getString("size"));
                                     isfill = Integer.parseInt(receivedOpe.getString("isfill"));
                                     gui.drawPolygon(startx, starty, x, y, color, size, isfill);
@@ -239,10 +239,18 @@ public class SWBClient {
                                 if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("square")) {
                                     x = Integer.parseInt(receivedOpe.getString("x"));
                                     y = Integer.parseInt(receivedOpe.getString("y"));
-                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
                                     size = Integer.parseInt(receivedOpe.getString("size"));
                                     isfill = Integer.parseInt(receivedOpe.getString("isfill"));
                                     gui.drawSquare(startx, starty, x, y, color, size, isfill);
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseClicked") && receivedOpe.getString("state").equals("text")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = ColorConverter.String2Color(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    str = receivedOpe.getString("content");
+                                    gui.drawText(startx, starty, color, size, str);
                                 }
                             } catch (Exception e) {
 

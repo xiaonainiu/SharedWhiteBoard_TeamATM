@@ -183,7 +183,7 @@ public class SWBServer {
                                             reply_message = new JSONObject(map);
                                             reply_messageStr = reply_message.toString();
                                             joinStream.writeUTF(reply_messageStr);
-                                            for (int i=0;i<picture.size();i++){
+                                            for (int i = 0; i < picture.size(); i++) {
                                                 reply_messageStr = picture.get(i);
                                                 joinStream.writeUTF(reply_messageStr);
                                             }
@@ -231,7 +231,7 @@ public class SWBServer {
                                     }
                                     break;
                                 case "kick":
-                                    user = message.getString("user");
+                                    user = message.getString("username");
                                     manager = message.getString("manager");
                                     reply_type = "kickFeedback";
                                     map.put("type", reply_type);
