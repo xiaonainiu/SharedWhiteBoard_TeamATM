@@ -25,6 +25,7 @@ public class SWBClient {
     private String manager;
     private String user;
     static SWBClient_GUI gui;
+    static int startx, starty;
 
     public static void main(String args[]) {
 
@@ -167,11 +168,85 @@ public class SWBClient {
                             break;
                         case "draw":
                             //draw picture with "draw"
-                            int x, y;
-                            JSONObject receivedOpe = new JSONObject(socket_inputStr);
-                            x = Integer.parseInt(receivedOpe.getString("startx"));
-                            y = Integer.parseInt(receivedOpe.getString("starty"));
-                            gui.drawing(x, y);
+                            try {
+                                int x, y, size, isfill;
+                                Color color;
+                                JSONObject receivedOpe = new JSONObject(socket_inputStr);
+                                if (receivedOpe.getString("operation").equals("mousePressed")) {
+                                    startx = Integer.parseInt(receivedOpe.getString("startx"));
+                                    starty = Integer.parseInt(receivedOpe.getString("starty"));
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("line")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    gui.drawLine(startx, starty, x, y, color, size);
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("pencil")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    gui.drawPencil(startx, starty, x, y, color, size);
+                                    startx = x;
+                                    starty = y;
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("eraser")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    gui.drawEraser(startx, starty, x, y, color, size);
+                                    startx = x;
+                                    starty = y;
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseReleased")) {
+                                    gui.caching();
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("rectangle")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    isfill = Integer.parseInt(receivedOpe.getString("isfill"));
+                                    gui.drawRect(startx, starty, x, y, color, size, isfill);
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("circle")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    isfill = Integer.parseInt(receivedOpe.getString("isfill"));
+                                    gui.drawCircle(startx, starty, x, y, color, size, isfill);
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("oval")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    isfill = Integer.parseInt(receivedOpe.getString("isfill"));
+                                    gui.drawOval(startx, starty, x, y, color, size, isfill);
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("polygon")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    isfill = Integer.parseInt(receivedOpe.getString("isfill"));
+                                    gui.drawPolygon(startx, starty, x, y, color, size, isfill);
+                                }
+                                if (receivedOpe.getString("operation").equals("mouseDragged") && receivedOpe.getString("state").equals("square")) {
+                                    x = Integer.parseInt(receivedOpe.getString("x"));
+                                    y = Integer.parseInt(receivedOpe.getString("y"));
+                                    color = Color.getColor(receivedOpe.getString("color"));
+                                    size = Integer.parseInt(receivedOpe.getString("size"));
+                                    isfill = Integer.parseInt(receivedOpe.getString("isfill"));
+                                    gui.drawSquare(startx, starty, x, y, color, size, isfill);
+                                }
+                            } catch (Exception e) {
+
+                            }
                             break;
                         case "kick":
                             //close GUI

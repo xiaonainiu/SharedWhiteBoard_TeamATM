@@ -42,6 +42,8 @@ public class LoginWindow {
                     message.put("user", textField1.getText());
                     message.put("ip", textField_ip.getText());
                     message.put("port", textField_port.getText());
+                    loginIp = textField_ip.getText();
+                    loginPort = textField_port.getText();
                     loginName = textField1.getText();
                     String messageStr = message.toString();
 //                    System.out.println(messageStr);
@@ -77,6 +79,8 @@ public class LoginWindow {
                     message.put("manager", textField1.getText());
                     message.put("ip", textField_ip.getText());
                     message.put("port", textField_port.getText());
+                    loginIp = textField_ip.getText();
+                    loginPort = textField_port.getText();
                     loginName = textField1.getText();
 //                    System.out.println(message);
                     String messageStr = message.toString();
@@ -133,6 +137,8 @@ public class LoginWindow {
     static boolean flag = false;
     static JFrame frame;
     static String loginName;
+    static String loginIp;
+    static String loginPort;
     String ip_regex = "((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
     String number = "^-?[0-9]+$";
 }
