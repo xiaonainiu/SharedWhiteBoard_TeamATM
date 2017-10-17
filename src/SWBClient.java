@@ -41,7 +41,6 @@ public class SWBClient {
 //        gui1.start();
 //        SWBClient_GUI gui1 = new SWBClient_GUI();
 
-//        demo of json
 
 //        HashMap<String,String> map = new HashMap<String,String>();
 //        map.put("operation","chatWindow");
