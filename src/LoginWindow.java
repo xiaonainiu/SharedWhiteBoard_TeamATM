@@ -49,7 +49,7 @@ public class LoginWindow {
 //                    System.out.println(messageStr);
                     try {
                         SWBClient.dos.writeUTF(messageStr);
-                        frame.dispose();
+//                        frame.dispose();
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }
@@ -87,7 +87,7 @@ public class LoginWindow {
 //                    System.out.println(messageStr);
                     try {
                         SWBClient.dos.writeUTF(messageStr);
-                        frame.dispose();
+//                        frame.dispose();
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }

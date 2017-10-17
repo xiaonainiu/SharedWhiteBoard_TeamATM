@@ -10,6 +10,9 @@ import java.util.*;
 /**
  * Created by ES on 2017/9/14.
  */
+
+// improve
+// remove ip port in addPlayer and Game
 public class SWBServer {
     ServerSocket serverSocket;
     static List<Game> gameList = new ArrayList<>();
@@ -119,11 +122,14 @@ public class SWBServer {
                                 case "join":
                                     System.out.println("join case is active");
                                     reply_type = "joinFeedback";
+                                    user = message.getString("user");
                                     map.put("type", reply_type);
                                     map.put("result", "false");
+                                    map.put("ip",ip);
+                                    map.put("port",port);
+                                    map.put("targetUser",user);
                                     reply_message = new JSONObject(map);
                                     reply_messageStr = reply_message.toString();
-                                    System.out.println(reply_messageStr);
 
                                     user = message.getString("user");
 
@@ -133,20 +139,20 @@ public class SWBServer {
                                         // game not exist, return false
                                         dos.writeUTF(reply_messageStr);
                                         socketList.remove(user);
-                                        dos.close();
-                                        socket.close();
+//                                        dos.close();
+//                                        socket.close();
                                         System.out.println("game is not exist");
                                     } else {
                                         if (gameList.get(gameIndex).checkEmptySit()) {
                                             DataOutputStream joinStream = new DataOutputStream(socketList.get(gameList.get(gameIndex).manager).getOutputStream());
                                             joinStream.writeUTF(inputStr);
-                                            System.out.println(inputStr);
+                                            System.out.println("send to "+gameList.get(gameIndex).manager+" "+inputStr);
                                         } else {
                                             // game is full, return false+
                                             dos.writeUTF(reply_messageStr);
                                             socketList.remove((user));
-                                            dos.close();
-                                            socket.close();
+//                                            dos.close();
+//                                            socket.close();
                                             System.out.println("game is full");
                                         }
                                     }
@@ -154,51 +160,99 @@ public class SWBServer {
                                 case "joinFeedback":
                                     System.out.println("joinFeedback case is active");
                                     targetUser = message.getString("targetUser");
+                                    result = message.getString("result");
                                     DataOutputStream joinStream = new DataOutputStream(socketList.get(targetUser).getOutputStream());
-                                    if (gameIndex != -1) {
-                                        userNumber = gameList.get(gameIndex).addPlayer(targetUser, ip, port);
-                                        if (userNumber == -1) {
+                                    manager = message.getString("manager");
+                                    if (result.equals("true")){
+                                        if (gameIndex != -1) {
+                                            userNumber = gameList.get(gameIndex).addPlayer(targetUser, ip, port);
+                                            if (userNumber == -1) {
+                                                result = "false";
+                                                map.put("type", "joinFeedback");
+                                                map.put("result", result);
+                                                map.put("ip",ip);
+                                                map.put("port",port);
+                                                reply_message = new JSONObject(map);
+                                                reply_messageStr = reply_message.toString();
+                                                System.out.println("sent to "+manager+reply_messageStr);
+                                                dos.writeUTF(reply_messageStr);
+                                                System.out.println("sent to "+targetUser+reply_messageStr);
+                                                joinStream.writeUTF(reply_messageStr);
+                                                joinStream.close();
+//                                                socketList.get(targetUser).close();
+                                                socketList.remove(targetUser);
+                                            } else {
+                                                picture = gameList.get(gameIndex).getPicture();
+                                                manager = gameList.get(gameIndex).getManager();
+                                                result = "true";
+                                                map.put("type", "joinFeedback");
+                                                map.put("result", result);
+                                                map.put("ip", ip);
+                                                map.put("port", port);
+                                                map.put("targetUser", targetUser);
+                                                map.put("manager", manager);
+//                                            map.put("pic", pic);
+                                                map.put("userNumber", String.valueOf(userNumber));
+                                                reply_message = new JSONObject(map);
+                                                reply_messageStr = reply_message.toString();
+                                                joinStream.writeUTF(reply_messageStr);
+                                                System.out.println("sent to "+targetUser+reply_messageStr);
+                                                for (int i = 0; i < picture.size(); i++) {
+                                                    reply_messageStr = picture.get(i);
+                                                    joinStream.writeUTF(reply_messageStr);
+                                                }
+                                                userList = gameList.get(gameIndex).getUser();
+                                                map.put("type","setUser");
+                                                map.put("user1",userList[1]);
+                                                map.put("user2",userList[2]);
+                                                map.put("user3",userList[3]);
+                                                reply_message = new JSONObject(map);
+                                                reply_messageStr = reply_message.toString();
+                                                System.out.println(reply_message.has("user2"));
+//                                        **for send to all user**
+                                                for (int j = 0; j < 4; j++){
+                                                    if (userList[j] != null){
+                                                        DataOutputStream chatStream = new DataOutputStream(socketList.get(userList[j]).getOutputStream() );
+                                                        chatStream.writeUTF(reply_messageStr);
+                                                        System.out.println("sent to "+userList[j]+reply_messageStr);
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            //if the game is close
                                             result = "false";
                                             map.put("type", "joinFeedback");
                                             map.put("result", result);
+                                            map.put("ip",ip);
+                                            map.put("port",port);
                                             reply_message = new JSONObject(map);
                                             reply_messageStr = reply_message.toString();
+                                            System.out.println("sent to "+manager+reply_messageStr);
                                             dos.writeUTF(reply_messageStr);
+                                            System.out.println("sent to "+targetUser+reply_messageStr);
                                             joinStream.writeUTF(reply_messageStr);
                                             joinStream.close();
-                                            socketList.get(targetUser).close();
+//                                            socketList.get(targetUser).close();
                                             socketList.remove(targetUser);
-                                        } else {
-                                            picture = gameList.get(gameIndex).getPicture();
-                                            manager = gameList.get(gameIndex).getManager();
-                                            result = "true";
-                                            map.put("type", "joinFeedback");
-                                            map.put("result", result);
-                                            map.put("ip", ip);
-                                            map.put("port", port);
-                                            map.put("targetUser", targetUser);
-                                            map.put("manager", manager);
-//                                            map.put("pic", pic);
-                                            map.put("userNumber", String.valueOf(userNumber));
-                                            reply_message = new JSONObject(map);
-                                            reply_messageStr = reply_message.toString();
-                                            joinStream.writeUTF(reply_messageStr);
-                                            for (int i = 0; i < picture.size(); i++) {
-                                                reply_messageStr = picture.get(i);
-                                                joinStream.writeUTF(reply_messageStr);
-                                            }
-//                                        **for send to all user**
-//                                        userList= gameList.get(gameIndex).getUser();
-//                                        for (int j = 0; j < 4; j++){
-//                                            if (userList[j] != null){
-//                                                DataOutputStream chatStream = new DataOutputStream(socketList.get(userList[j]).getOutputStream() );
-//                                                chatStream.writeUTF(inputStr);
-//                                            }
-//                                        }
                                         }
-                                    } else {
-                                        //if the game is close
+                                    }else {
+                                        result = "false";
+                                        map.put("type", "joinFeedback");
+                                        map.put("result", result);
+                                        map.put("ip",ip);
+                                        map.put("port",port);
+                                        reply_message = new JSONObject(map);
+                                        reply_messageStr = reply_message.toString();
+                                        System.out.println("sent to "+manager+reply_messageStr);
+                                        dos.writeUTF(reply_messageStr);
+                                        System.out.println("sent to "+targetUser+reply_messageStr);
+                                        joinStream.writeUTF(reply_messageStr);
+                                        joinStream.close();
+//                                        socketList.get(targetUser).close();
+                                        socketList.remove(targetUser);
+
                                     }
+
                                     break;
                                 case "chatWindow":
                                     //String player = message.getString("player");
@@ -231,18 +285,73 @@ public class SWBServer {
                                     }
                                     break;
                                 case "kick":
-                                    user = message.getString("username");
+                                    targetUser = message.getString("username");
                                     manager = message.getString("manager");
                                     reply_type = "kickFeedback";
                                     map.put("type", reply_type);
-                                    map.put("result", "false");
-                                    reply_message = new JSONObject(map);
-                                    reply_messageStr = reply_message.toString();
-                                    System.out.println(reply_messageStr);
-                                    if (gameIndex != -1 && gameList.get(gameIndex).manager.equals(manager)) {
-                                        if (gameList.get(gameIndex).checkUser(user)) {
-                                            DataOutputStream kickStream = new DataOutputStream(socketList.get(user).getOutputStream());
-                                            kickStream.writeUTF(inputStr);
+                                    map.put("username",targetUser);
+                                    map.put("manager",manager);
+                                    map.put("ip",ip);
+                                    map.put("port",port);
+//                                    map.put("result", "false");
+                                    if (gameIndex!=-1){
+                                        System.out.println(targetUser);
+                                        for (int i = 0; i<gameList.get(gameIndex).getUser().length;i++){
+                                            System.out.println("user"+i+" : "+gameList.get(gameIndex).getUser()[i]);
+                                        }
+
+                                        System.out.println(targetUser);
+                                        userNumber = gameList.get(gameIndex).kickUser(targetUser);
+                                        System.out.println(userNumber);
+                                        map.put("userNumber",String.valueOf(userNumber));
+                                        if (userNumber!=-1){
+                                            System.out.println("**in userNumber !=-1**");
+                                            result = "true";
+                                            map.put("result",result);
+                                            reply_message = new JSONObject(map);
+                                            reply_messageStr = reply_message.toString();
+                                            DataOutputStream kickStream = new DataOutputStream(socketList.get(targetUser).getOutputStream() );
+                                            System.out.println("sent to "+targetUser+reply_messageStr);
+                                            kickStream.writeUTF(reply_messageStr);
+
+                                            userList = gameList.get(gameIndex).getUser();
+                                            for (int i = 0; i<gameList.get(gameIndex).getUser().length;i++){
+                                                System.out.println("user"+i+" : "+userList[i]);
+                                            }
+                                            map.put("type","setUser");
+                                            map.put("user1",userList[1]);
+                                            map.put("user2",userList[2]);
+                                            map.put("user3",userList[3]);
+                                            reply_message = new JSONObject(map);
+                                            reply_messageStr = reply_message.toString();
+                                            System.out.println("the reply messageStr is: "+reply_messageStr);
+//                                        **for send to all user**
+                                            for (int j = 0; j < 4; j++){
+                                                if (userList[j] != null){
+                                                    DataOutputStream setUserStream = new DataOutputStream(socketList.get(userList[j]).getOutputStream() );
+                                                    setUserStream.writeUTF(reply_messageStr);
+                                                    System.out.println("sent to "+userList[j]+reply_messageStr);
+                                                }
+                                            }
+                                            socketList.get(targetUser).close();
+                                            socketList.remove(targetUser);
+                                        }else {
+                                            result = "false";
+                                            map.put("result",result);
+                                            reply_message = new JSONObject(map);
+                                            reply_messageStr = reply_message.toString();
+                                            System.out.println(reply_messageStr);
+                                            dos.writeUTF(reply_messageStr);
+                                        }
+                                    }
+
+//                                    reply_message = new JSONObject(map);
+//                                    reply_messageStr = reply_message.toString();
+//                                    System.out.println(reply_messageStr);
+//                                    if (gameIndex != -1 && gameList.get(gameIndex).manager.equals(manager)) {
+//                                        if (gameList.get(gameIndex).checkUser(user)) {
+//                                            DataOutputStream kickStream = new DataOutputStream(socketList.get(user).getOutputStream());
+//                                            kickStream.writeUTF(inputStr);
 //                                        **for send to all user**
 //                                        userList = gameList.get(gameIndex).getUser();
 //                                        for (int j = 0; j < 4; j++){
@@ -253,14 +362,14 @@ public class SWBServer {
 //                                                System.out.println("user is not exist");
 //                                            }
 //                                        }
-                                            kickStream.close();
-                                            socketList.get(user).close();
-                                            socketList.remove(user);
-                                        }
-                                    } else {
-                                        dos.writeUTF(reply_messageStr);
-                                        System.out.println("game is not exist");
-                                    }
+//                                            kickStream.close();
+//                                            socketList.get(user).close();
+//                                            socketList.remove(user);
+//                                        }
+//                                    } else {
+//                                        dos.writeUTF(reply_messageStr);
+//                                        System.out.println("game is not exist");
+//                                    }
                                     break;
                                 default:
                                     System.out.println("Invalid input");

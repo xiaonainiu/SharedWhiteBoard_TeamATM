@@ -71,8 +71,34 @@ public class Game {
         return user;
     }
 
-    public boolean checkUser(String user) {
-        return player1 == user || player2 == user || player3 == user;
+    public int checkUser(String user) {
+        if (player1.equals(user)){
+            return 1;
+        }else if (player2.equals(user)){
+            return 2;
+        }else if (player3.equals(user)){
+            return 3;
+        }else {
+            return -1;
+        }
+    }
+
+    public int kickUser(String user){
+        int index = checkUser(user);
+        if (index==1){
+            this.player1=null;
+            this.player1ip=null;
+            this.player1port=null;
+        }else if (index==2){
+            this.player2=null;
+            this.player2ip=null;
+            this.player2port=null;
+        }else if (index==3){
+            this.player3=null;
+            this.player3ip=null;
+            this.player3port=null;
+        }
+        return index;
     }
 
     public String getManager() {

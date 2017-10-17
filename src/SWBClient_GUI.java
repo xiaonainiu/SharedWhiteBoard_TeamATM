@@ -14,7 +14,7 @@ import org.json.*;
 
 import java.util.HashMap;
 
-import sun.rmi.runtime.Log;
+//import sun.rmi.runtime.Log;
 
 /**
  * Created by ES on 2017/9/14.
@@ -67,22 +67,22 @@ public class SWBClient_GUI extends JFrame {
     private JButton bt_exit;
     private JTextArea textArea2;
     private JButton bt_undo;
-    private JTextField textField1; //used for kick out
-    private JTextField textField2; // used for kick out
-    private JTextField textField3; // used for kick out
-    private JTextField textField4; // used for kick out
-    private JButton kick1;
-    private JButton kick2;
-    private JButton kick3;
-    private JLabel manager; //used for kick out
-    private JLabel player1; //used for kick out
-    private JLabel player2; //used for kick out
-    private JLabel player3; //used for kick out
-    private int numberOfCurrentPlayer = 0; // used for kick out
-    private int stateOfManager = 0;// used for kick out
-    private int stateOfPlayer1 = 0;// used for kick out
-    private int stateOfPlayer2 = 0;// used for kick out
-    private int stateOfPlayer3 = 0;// used for kick out
+    public JTextField textField1; //used for kick out
+    public JTextField textField2; // used for kick out
+    public JTextField textField3; // used for kick out
+    public JTextField textField4; // used for kick out
+    public JButton kick1;
+    public JButton kick2;
+    public JButton kick3;
+    public JLabel manager; //used for kick out
+    public JLabel player1; //used for kick out
+    public JLabel player2; //used for kick out
+    public JLabel player3; //used for kick out
+    public int numberOfCurrentPlayer = 0; // used for kick out
+    public int stateOfManager = 0;// used for kick out
+    public int stateOfPlayer1 = 0;// used for kick out
+    public int stateOfPlayer2 = 0;// used for kick out
+    public int stateOfPlayer3 = 0;// used for kick out
     private int startx;
     private int starty;
     private int x;
@@ -447,6 +447,9 @@ public class SWBClient_GUI extends JFrame {
         kick1.setText("Kick");
         kick2.setText("Kick");
         kick3.setText("Kick");
+        kick1.setEnabled(false);
+        kick2.setEnabled(false);
+        kick3.setEnabled(false);
         textField1.setEditable(false);
         textField2.setEditable(false);
         textField3.setEditable(false);
@@ -456,126 +459,164 @@ public class SWBClient_GUI extends JFrame {
         WARNING!
         This two is used to test, should be deleted
          */
-        receivedMesg.put("type", "create");
-        receivedMesg.put("username", "Andrew");
+//        receivedMesg.put("type", "create");
+//        receivedMesg.put("username", "Andrew");
         /*
         WARNING1
         This two is used to test, should be deleted
          */
 
-        if (receivedMesg.getString("type").toString().equalsIgnoreCase("create")) {
-            if (numberOfCurrentPlayer == 0 && stateOfManager == 0) {
-                textField1.setText(receivedMesg.getString("username").toString());
-                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
-                stateOfManager = stateOfManager + 1;
-            } else {
-                System.out.println("ERROR: MANAGER ALREADY EXISTED");
-            }
-        }
-        if (receivedMesg.getString("type").toString().equalsIgnoreCase("join")) {
-            if (stateOfPlayer1 == 0) {
-                textField2.setText(receivedMesg.getString("username").toString());
-                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
-                stateOfPlayer1 = stateOfPlayer1 + 1;
-            } else if (stateOfPlayer1 != 0 && stateOfPlayer2 == 0) {
-                textField3.setText(receivedMesg.getString("username").toString());
-                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
-                stateOfPlayer2 = stateOfPlayer2 + 1;
-            } else if (stateOfPlayer2 != 0 && stateOfPlayer3 == 0) {
-                textField4.setText(receivedMesg.getString("username").toString());
-                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
-                stateOfPlayer3 = stateOfPlayer3 + 1;
-            } else {
-                System.out.println("ERROR: PLAYER FULL");
-            }
-        }
+//        if (receivedMesg.getString("type").toString().equalsIgnoreCase("create")) {
+//            if (numberOfCurrentPlayer == 0 && stateOfManager == 0) {
+//                textField1.setText(receivedMesg.getString("username").toString());
+//                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
+//                stateOfManager = stateOfManager + 1;
+//            } else {
+//                System.out.println("ERROR: MANAGER ALREADY EXISTED");
+//            }
+//        }
+//        if (receivedMesg.getString("type").toString().equalsIgnoreCase("join")) {
+//            if (stateOfPlayer1 == 0) {
+//                textField2.setText(receivedMesg.getString("username").toString());
+//                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
+//                stateOfPlayer1 = stateOfPlayer1 + 1;
+//            } else if (stateOfPlayer1 != 0 && stateOfPlayer2 == 0) {
+//                textField3.setText(receivedMesg.getString("username").toString());
+//                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
+//                stateOfPlayer2 = stateOfPlayer2 + 1;
+//            } else if (stateOfPlayer2 != 0 && stateOfPlayer3 == 0) {
+//                textField4.setText(receivedMesg.getString("username").toString());
+//                numberOfCurrentPlayer = numberOfCurrentPlayer + 1;
+//                stateOfPlayer3 = stateOfPlayer3 + 1;
+//            } else {
+//                System.out.println("ERROR: PLAYER FULL");
+//            }
+//        }
         kick1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (!textField2.getText().toString().equalsIgnoreCase("Waiting for joining")) {
-                    stateOfPlayer1 = 0;
-                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
+//                if (!textField2.getText().toString().equalsIgnoreCase("Waiting for joining")) {
+//                    stateOfPlayer1 = 0;
+//                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
                     JSONObject kickplayer1 = new JSONObject();
                     kickplayer1.put("type", "kick");
                     kickplayer1.put("username", textField2.getText().toString());
+                    kickplayer1.put("manager",LoginWindow.loginName);
                     kickplayer1.put("ip", LoginWindow.loginIp);
                     kickplayer1.put("port", LoginWindow.loginPort);
                     String kick1_str = kickplayer1.toString();
+                    /*
+                                This part used to update the name of exited player
+                                The position can not be changed!!!
+                                 */
+//                    if (stateOfPlayer1 == 0) {
+//                        textField2.setText("Waiting for join");
+//                    }
+//                    if (stateOfPlayer2 == 0) {
+//                        textField3.setText("Waiting for join");
+//                    }
+//                    if (stateOfPlayer3 == 0) {
+//                        textField4.setText("Waiting for join");
+//                    }
+                                /*
+                                This part used to update the name of exited player
+                                The position can not be changed!!!
+                                 */
                     try {
                         SWBClient.dos.writeUTF(kick1_str);
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                } else {
-                    System.out.println("NO PLAYER ERROR");
-                }
+//                } else {
+//                    System.out.println("NO PLAYER ERROR");
+//                }
             }
         });
         kick2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (!textField3.getText().toString().equalsIgnoreCase("Waiting for join")) {
-                    stateOfPlayer2 = 0;
-                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
+//                if (!textField3.getText().toString().equalsIgnoreCase("Waiting for join")) {
+//                    stateOfPlayer2 = 0;
+//                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
                     JSONObject kickplayer2 = new JSONObject();
                     kickplayer2.put("type", "kick");
                     kickplayer2.put("username", textField3.getText().toString());
+                    kickplayer2.put("manager",LoginWindow.loginName);
                     kickplayer2.put("ip", LoginWindow.loginIp);
                     kickplayer2.put("port", LoginWindow.loginPort);
                     String kick2_str = kickplayer2.toString();
+                    /*
+                                This part used to update the name of exited player
+                                The position can not be changed!!!
+                                 */
+//                    if (stateOfPlayer1 == 0) {
+//                        textField2.setText("Waiting for join");
+//                    }
+//                    if (stateOfPlayer2 == 0) {
+//                        textField3.setText("Waiting for join");
+//                    }
+//                    if (stateOfPlayer3 == 0) {
+//                        textField4.setText("Waiting for join");
+//                    }
+                                /*
+                                This part used to update the name of exited player
+                                The position can not be changed!!!
+                                 */
                     try {
                         SWBClient.dos.writeUTF(kick2_str);
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                } else {
-                    System.out.println("NO PLAYER ERROR");
-                }
+//                } else {
+//                    System.out.println("NO PLAYER ERROR");
+//                }
             }
         });
         kick3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (!textField4.getText().toString().equalsIgnoreCase("Waiting for join")) {
-                    stateOfPlayer3 = 0;
-                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
+//                if (!textField4.getText().toString().equalsIgnoreCase("Waiting for join")) {
+//                    stateOfPlayer3 = 0;
+//                    numberOfCurrentPlayer = numberOfCurrentPlayer - 1;
                     JSONObject kickplayer3 = new JSONObject();
                     kickplayer3.put("type", "kick");
                     kickplayer3.put("username", textField4.getText().toString());
+                    kickplayer3.put("manager",LoginWindow.loginName);
                     kickplayer3.put("ip", LoginWindow.loginIp);
                     kickplayer3.put("port", LoginWindow.loginPort);
                     String kick3_str = kickplayer3.toString();
+                    /*
+                                This part used to update the name of exited player
+                                The position can not be changed!!!
+                                 */
+//                    if (stateOfPlayer1 == 0) {
+//                        textField2.setText("Waiting for join");
+//                    }
+//                    if (stateOfPlayer2 == 0) {
+//                        textField3.setText("Waiting for join");
+//                    }
+//                    if (stateOfPlayer3 == 0) {
+//                        textField4.setText("Waiting for join");
+//                    }
+                                /*
+                                This part used to update the name of exited player
+                                The position can not be changed!!!
+                                 */
                     try {
                         SWBClient.dos.writeUTF(kick3_str);
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                } else {
-                    System.out.println("NO PLAYER ERROR");
-                }
+//                } else {
+//                    System.out.println("NO PLAYER ERROR");
+//                }
             }
         });
 
-        /*
-        This part used to update the name of exited player
-        The position can not be changed!!!
-         */
-        if (stateOfPlayer1 == 0) {
-            textField2.setText("Waiting for join");
-        }
-        if (stateOfPlayer2 == 0) {
-            textField3.setText("Waiting for join");
-        }
-        if (stateOfPlayer3 == 0) {
-            textField4.setText("Waiting for join");
-        }
-        /*
-        This part used to update the name of exited player
-        The position can not be changed!!!
-         */
+
 
         /**
          * This part is written by LZH

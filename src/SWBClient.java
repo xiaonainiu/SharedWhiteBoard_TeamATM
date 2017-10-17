@@ -90,7 +90,6 @@ public class SWBClient {
                  * input
                  * end
                  */
-                System.out.println("paoguole");
                 if ((socket_inputStr = client.dis.readUTF()) != null) {
                     System.out.println("From IP: " + client.socket.getInetAddress() + "," + client.socket.getPort() + ": " + socket_inputStr);
                     //get the command and make operation
@@ -102,6 +101,8 @@ public class SWBClient {
                     String result;
                     String manager;
                     String user;
+                    String targetUser;
+                    String userNumber;
                     /*
                     * Edited by LZH
                     * */
@@ -114,18 +115,31 @@ public class SWBClient {
                             System.out.println("**case: createFeedback**");
                             result = message.getString("result");
                             if (result.equals("true")) {
+                                logWin.frame.dispose();
                                 client.ip = ip;
                                 client.port = port;
                                 client.manager = message.getString("manager");
                                 client.user = message.getString("manager");
                                 System.out.println("**going to start**");
                                 gui = new SWBClient_GUI();
+                                /* Manager*/
+                                if (gui.numberOfCurrentPlayer == 0 && gui.stateOfManager == 0) {
+                                    gui.textField1.setText(message.getString("manager").toString());
+                                    gui.numberOfCurrentPlayer = gui.numberOfCurrentPlayer + 1;
+                                    gui.stateOfManager = gui.stateOfManager + 1;
+                                } else {
+                                    System.out.println("ERROR: MANAGER ALREADY EXISTED");
+                                }
+                                /* Manager*/
+
                                 System.out.println("**already start**");
                                 //open GUI
                             } else if (result.equals("false")) {
                                 //alert : create fail
+                                JOptionPane.showMessageDialog(null, "Manager"+message.getString("targetUser")+"Create Fail");
                             } else {
                                 //alert : connection fail
+                                JOptionPane.showMessageDialog(null, "Connection Fail");
                             }
                             break;
                         case "join":
@@ -153,15 +167,37 @@ public class SWBClient {
                             System.out.println("**case: joinFeedback**");
                             result = message.getString("result");
                             if (result.equals("true")) {
+                                logWin.frame.dispose();
                                 client.ip = message.getString("ip");
                                 client.port = message.getString("port");
                                 client.manager = message.getString("manager");
                                 client.user = message.getString("targetUser");
                                 gui = new SWBClient_GUI();
+                                /* Manager*/
+                                if (gui.numberOfCurrentPlayer == 0 && gui.stateOfManager == 0) {
+                                    gui.textField1.setText(message.getString("manager").toString());
+                                    gui.numberOfCurrentPlayer = gui.numberOfCurrentPlayer + 1;
+                                    gui.stateOfManager = gui.stateOfManager + 1;
+                                } else {
+                                    System.out.println("ERROR: MANAGER ALREADY EXISTED");
+                                }
+                                if (gui.stateOfPlayer1 == 0) {
+                                    gui.textField2.setText("Waiting for join");
+                                }
+                                if (gui.stateOfPlayer2 == 0) {
+                                    gui.textField3.setText("Waiting for join");
+                                }
+                                if (gui.stateOfPlayer3 == 0) {
+                                    gui.textField4.setText("Waiting for join");
+                                }
+                                /* Manager*/
                                 //open GUI
                             } else if (result.equals("false")) {
+                                JOptionPane.showMessageDialog(null, "User "+message.getString("targetUser")+" Join Fail");
+
                                 //alert : create fail
                             } else {
+                                JOptionPane.showMessageDialog(null, "Connection Fail");
                                 //alert : connection fail
                             }
                             break;
@@ -256,7 +292,94 @@ public class SWBClient {
 
                             }
                             break;
-                        case "kick":
+                        case "kickFeedback":
+                            result = message.getString("result");
+                            if (result.equals("true")){
+                                targetUser = message.getString("username");
+                                if (targetUser.equals(client.user)){
+                                    System.out.println("**going to close**");
+
+                                    //you have been kicked
+                                    //close GUI
+                                    JOptionPane.showMessageDialog(null, "You have been kicked");
+                                    System.exit(0);
+                                }else {
+                                    // targetUser have been kicked
+                                    JOptionPane.showMessageDialog(null, targetUser+" have been kicked");
+                                    userNumber = message.getString("userNumber");
+                                    if (client.user.equals(client.manager)){
+                                        switch (userNumber){
+                                            case "1":
+                                                gui.player1.setText("");
+                                                gui.kick1.setEnabled(false);
+                                            case "2":
+                                                gui.player2.setText("");
+                                                gui.kick2.setEnabled(false);
+                                            case "3":
+                                                gui.player3.setText("");
+                                                gui.kick3.setEnabled(false);
+                                        }
+                                    }else {
+                                        switch (userNumber){
+                                            case "1":
+                                                gui.player1.setText("");
+                                            case "2":
+                                                gui.player2.setText("");
+                                            case "3":
+                                                gui.player3.setText("");
+                                        }
+                                    }
+
+                                }
+                            }else {
+
+                            }
+                        case "setUser":
+                            if (client.user.equals(client.manager)){
+                                System.out.println(message.has("user2"));
+                                if (message.has("user1")){
+                                    System.out.println(message.getString("user1"));
+                                    gui.kick1.setEnabled(true);
+                                    gui.textField2.setText(message.getString("user1").toString());
+                                }else {
+                                    gui.kick1.setEnabled(false);
+                                    gui.textField2.setText("Waiting for join");
+                                }
+                                if (message.has("user2")){
+                                    System.out.println(message.getString("user2"));
+                                    gui.kick2.setEnabled(true);
+                                    gui.textField3.setText(message.getString("user2").toString());
+                                }else {
+                                    gui.kick2.setEnabled(false);
+                                    gui.textField3.setText("Waiting for join");
+                                }
+                                if (message.has("user3")){
+                                    gui.kick3.setEnabled(true);
+                                    gui.textField4.setText(message.getString("user3").toString());
+                                }else {
+                                    gui.kick3.setEnabled(false);
+                                    gui.textField4.setText("Waiting for join");
+                                }
+                            }else {
+                                System.out.println(message.has("user2"));
+                                if (message.has("user1")){
+                                    System.out.println(message.getString("user1"));
+                                    gui.textField2.setText(message.getString("user1").toString());
+                                }else {
+                                    gui.textField2.setText("Waiting for join");
+                                }
+                                if (message.has("user2")){
+                                    System.out.println(message.getString("user2"));
+                                    gui.textField3.setText(message.getString("user2").toString());
+                                }else {
+                                    gui.textField3.setText("Waiting for join");
+                                }
+                                if (message.has("user3")){
+                                    gui.textField4.setText(message.getString("user3").toString());
+                                }else {
+                                    gui.textField4.setText("Waiting for join");
+                                }
+                            }
                             //close GUI
                             break;
                         //alert : you have been kicked by manager
